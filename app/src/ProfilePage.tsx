@@ -17,9 +17,9 @@ export function ProfilePage() {
     <div className="flex h-screen flex-col items-center justify-center space-y-4 bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-white">
       <div className="w-full max-w-sm space-y-4 rounded-lg bg-white p-6 text-gray-900 dark:bg-[#101a23] dark:text-white">
         <img
-          src={`https://ui-avatars.com/api/?name=${user.username}`}
+          src="/images/profile.png"
           alt="avatar"
-          className="mx-auto h-24 w-24 rounded-full"
+          className="mx-auto h-24 w-24 rounded-full object-cover"
         />
         <div className="space-y-1 text-center">
           <h2 className="text-xl font-semibold">{user.username}</h2>
