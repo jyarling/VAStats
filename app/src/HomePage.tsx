@@ -28,19 +28,19 @@ export default function HomePage() {
     <div className="space-y-6">
       <h1 className="text-2xl font-bold">Dashboard</h1>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <div className="flex items-center justify-between rounded-lg bg-gray-800 p-4">
+        <div className="flex items-center justify-between rounded-lg bg-gray-200 p-4 dark:bg-gray-800">
           <span>Total Flights</span>
           <span className="text-3xl font-bold">{totalFlights}</span>
         </div>
-        <div className="flex items-center justify-between rounded-lg bg-gray-800 p-4">
+        <div className="flex items-center justify-between rounded-lg bg-gray-200 p-4 dark:bg-gray-800">
           <span>Total Hours</span>
           <span className="text-3xl font-bold">{totalHours.toFixed(1)}</span>
         </div>
-        <div className="flex items-center justify-between rounded-lg bg-gray-800 p-4">
+        <div className="flex items-center justify-between rounded-lg bg-gray-200 p-4 dark:bg-gray-800">
           <span>Active Flights</span>
           <span className="text-3xl font-bold">{activeFlights}</span>
         </div>
-        <div className="flex items-center justify-between rounded-lg bg-gray-800 p-4">
+        <div className="flex items-center justify-between rounded-lg bg-gray-200 p-4 dark:bg-gray-800">
           <span>Upcoming Events</span>
           <span className="text-3xl font-bold">{events.length}</span>
         </div>
@@ -49,7 +49,7 @@ export default function HomePage() {
       <div className="space-y-2">
         <h2 className="text-xl font-semibold">Recent Flights</h2>
         <table className="w-full border-collapse text-sm">
-          <thead className="bg-gray-900">
+          <thead className="bg-gray-200 dark:bg-gray-900">
             <tr>
               <th className="px-3 py-2 text-left font-semibold text-gray-400">Date</th>
               <th className="px-3 py-2 text-left font-semibold text-gray-400">Route</th>
@@ -59,7 +59,7 @@ export default function HomePage() {
           </thead>
           <tbody>
             {recent.map((f) => (
-              <tr key={f.id} className="border-b bg-gray-800 text-white last:border-b-0">
+              <tr key={f.id} className="border-b bg-white text-gray-900 last:border-b-0 dark:bg-gray-800 dark:text-white">
                 <td className="px-3 py-2">{f.date}</td>
                 <td className="px-3 py-2">{f.route}</td>
                 <td className="px-3 py-2">{f.duration}</td>

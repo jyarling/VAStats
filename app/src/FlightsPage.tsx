@@ -39,7 +39,7 @@ function SortableRow({ flight }: { flight: Flight }) {
       style={style}
       {...attributes}
       {...listeners}
-      className="bg-gray-800 text-white border-b last:border-b-0"
+      className="border-b bg-white text-gray-900 last:border-b-0 dark:bg-gray-800 dark:text-white"
     >
       <td className="px-3 py-2">
         <span className="flex items-center gap-2">
@@ -107,7 +107,7 @@ export default function FlightsPage() {
         onDragEnd={handleDragEnd}
       >
         <table className="w-full border-collapse text-sm">
-          <thead className="bg-gray-900 text-gray-300 sticky top-0">
+          <thead className="sticky top-0 bg-gray-200 text-gray-700 dark:bg-gray-900 dark:text-gray-300">
             <tr>
               <th
                 onClick={() => handleSort('pilot')}

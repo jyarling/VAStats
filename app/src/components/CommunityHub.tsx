@@ -71,7 +71,7 @@ export default function CommunityHub() {
           {activities.map(act => (
             <div
               key={act.id}
-              className="flex min-w-[150px] items-center gap-3 rounded-lg bg-gray-800 p-3 flex-shrink-0"
+              className="flex min-w-[150px] items-center gap-3 rounded-lg bg-gray-200 p-3 flex-shrink-0 dark:bg-gray-800"
             >
               <img src={act.avatar} alt="avatar" className="h-10 w-10 rounded-full object-cover" />
               <div className="flex flex-col">
@@ -89,9 +89,9 @@ export default function CommunityHub() {
           {events.map(ev => (
             <div
               key={ev.id}
-              className="flex items-center gap-3 rounded-lg bg-[#101a23] p-4"
+              className="flex items-center gap-3 rounded-lg bg-gray-200 p-4 dark:bg-[#101a23]"
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#223649]">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600 dark:bg-[#223649]">
                 <Calendar className="h-5 w-5" />
               </div>
               <div className="flex flex-col">

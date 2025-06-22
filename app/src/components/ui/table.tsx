@@ -9,7 +9,7 @@ export const Table = forwardRef<HTMLTableElement, HTMLAttributes<HTMLTableElemen
 export function TableHeader({ className, ...props }: HTMLAttributes<HTMLTableSectionElement>) {
   return (
     <thead
-      className={cn('bg-gray-900 text-gray-300 sticky top-0', className)}
+      className={cn('sticky top-0 bg-gray-200 text-gray-700 dark:bg-gray-900 dark:text-gray-300', className)}
       {...props}
     />
   )

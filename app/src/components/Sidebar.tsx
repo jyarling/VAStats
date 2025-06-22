@@ -31,12 +31,12 @@ export default function Sidebar({ open = false, onToggle }: SidebarProps) {
   
   return (
     <aside
-      className={`fixed left-0 top-0 z-20 h-full bg-[#101a23] transition-all lg:w-80 ${
+      className={`fixed left-0 top-0 z-20 h-full transition-all lg:w-80 ${
         isOpen ? 'w-80' : 'w-16'
-      }`}
+      } bg-gray-100 text-gray-900 dark:bg-[#101a23] dark:text-white`}
     >
       <div className="flex h-full flex-col">
-        <div className="flex items-center justify-between p-4 text-white">
+        <div className="flex items-center justify-between p-4 text-gray-900 dark:text-white">
           <span className="flex items-center gap-2">
             <Plane className="h-6 w-6" />
             <span className={`${isOpen ? 'block' : 'hidden lg:block'} font-heading text-xl`}>VA Stats</span>
@@ -51,8 +51,8 @@ export default function Sidebar({ open = false, onToggle }: SidebarProps) {
               key={to}
               to={to}
               className={({ isActive }) =>
-                `flex items-center gap-3 rounded-md p-2 text-white hover:bg-[#223649] ${
-                  isActive ? 'bg-[#223649]' : ''
+                `flex items-center gap-3 rounded-md p-2 text-gray-900 hover:bg-gray-200 dark:text-white dark:hover:bg-[#223649] ${
+                  isActive ? 'bg-gray-200 dark:bg-[#223649]' : ''
                 }`
               }
             >
@@ -65,8 +65,8 @@ export default function Sidebar({ open = false, onToggle }: SidebarProps) {
           <NavLink
             to={admin.to}
             className={({ isActive }) =>
-              `flex items-center gap-3 rounded-md p-2 text-white hover:bg-[#223649] ${
-                isActive ? 'bg-[#223649]' : ''
+              `flex items-center gap-3 rounded-md p-2 text-gray-900 hover:bg-gray-200 dark:text-white dark:hover:bg-[#223649] ${
+                isActive ? 'bg-gray-200 dark:bg-[#223649]' : ''
               }`
             }
           >
