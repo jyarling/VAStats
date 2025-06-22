@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { User, Pencil, Trash } from 'lucide-react'
+import { User, Pencil, Trash, ChevronUp, ChevronDown } from 'lucide-react'
 import {
   DndContext,
   PointerSensor,
@@ -15,7 +15,14 @@ import {
 } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { useAppDispatch, useAppSelector } from './storeHooks'
-import { selectFlights, reorderFlights, type Flight } from './flightsSlice'
+import {
+  selectFlights,
+  selectSort,
+  reorderFlights,
+  toggleSort,
+  type Flight,
+  type SortField,
+} from './flightsSlice'
 import { Button, Input } from './components'
 
 function SortableRow({ flight }: { flight: Flight }) {
@@ -57,6 +64,7 @@ function SortableRow({ flight }: { flight: Flight }) {
 
 export default function FlightsPage() {
   const flights = useAppSelector(selectFlights)
+  const sort = useAppSelector(selectSort)
   const dispatch = useAppDispatch()
   const [filter, setFilter] = useState('')
 
@@ -72,6 +80,10 @@ export default function FlightsPage() {
   }, [flights, filter])
 
   const sensors = useSensors(useSensor(PointerSensor))
+
+  function handleSort(field: SortField) {
+    dispatch(toggleSort(field))
+  }
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event
@@ -95,13 +107,61 @@ export default function FlightsPage() {
         onDragEnd={handleDragEnd}
       >
         <table className="w-full border-collapse text-sm">
-          <thead className="bg-gray-900">
+          <thead className="bg-gray-900 text-gray-300 sticky top-0">
             <tr>
-              <th className="px-3 py-2 text-left font-semibold text-gray-400">Pilot</th>
-              <th className="px-3 py-2 text-left font-semibold text-gray-400">Origin</th>
-              <th className="px-3 py-2 text-left font-semibold text-gray-400">Destination</th>
-              <th className="px-3 py-2 text-left font-semibold text-gray-400">Aircraft</th>
-              <th className="px-3 py-2 text-right font-semibold text-gray-400">Actions</th>
+              <th
+                onClick={() => handleSort('pilot')}
+                className="cursor-pointer px-3 py-2 text-left font-semibold"
+              >
+                Pilot
+                {sort.field === 'pilot' && (
+                  sort.direction === 'asc' ? (
+                    <ChevronUp className="ml-1 inline h-3 w-3" />
+                  ) : (
+                    <ChevronDown className="ml-1 inline h-3 w-3" />
+                  )
+                )}
+              </th>
+              <th
+                onClick={() => handleSort('origin')}
+                className="cursor-pointer px-3 py-2 text-left font-semibold"
+              >
+                Origin
+                {sort.field === 'origin' && (
+                  sort.direction === 'asc' ? (
+                    <ChevronUp className="ml-1 inline h-3 w-3" />
+                  ) : (
+                    <ChevronDown className="ml-1 inline h-3 w-3" />
+                  )
+                )}
+              </th>
+              <th
+                onClick={() => handleSort('destination')}
+                className="cursor-pointer px-3 py-2 text-left font-semibold"
+              >
+                Destination
+                {sort.field === 'destination' && (
+                  sort.direction === 'asc' ? (
+                    <ChevronUp className="ml-1 inline h-3 w-3" />
+                  ) : (
+                    <ChevronDown className="ml-1 inline h-3 w-3" />
+                  )
+                )}
+              </th>
+              <th
+                onClick={() => handleSort('aircraft')}
+                className="cursor-pointer px-3 py-2 text-left font-semibold"
+              >
+                Aircraft
+                {sort.field === 'aircraft' && (
+                  sort.direction === 'asc' ? (
+                    <ChevronUp className="ml-1 inline h-3 w-3" />
+                  ) : (
+                    <ChevronDown className="ml-1 inline h-3 w-3" />
+                  )
+                )}
+              </th>
+              <th className="px-3 py-2 text-right font-semibold">Actions</th>
             </tr>
           </thead>
           <SortableContext
