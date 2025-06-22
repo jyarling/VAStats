@@ -1,6 +1,23 @@
 import { Calendar } from 'lucide-react'
 
 export default function CommunityHub() {
+  const flights = [
+    {
+      id: 1,
+      callsign: 'VA123',
+      origin: 'KJFK',
+      destination: 'KLAX',
+      image: '/images/placeholder-800x450.svg',
+    },
+    {
+      id: 2,
+      callsign: 'VA456',
+      origin: 'EGLL',
+      destination: 'LFPG',
+      image: '/images/placeholder-800x450.svg',
+    },
+  ]
+
   const activities = [
     {
       id: 1,
@@ -30,20 +47,36 @@ export default function CommunityHub() {
 
       <section className="space-y-4">
         <h2 className="font-heading text-2xl">Active Flights</h2>
-        <div className="aspect-video w-full overflow-hidden rounded-lg bg-[#223649]">
-          <img src="/images/placeholder-800x450.svg" alt="Map" className="h-full w-full object-cover" />
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          {flights.map(f => (
+            <div
+              key={f.id}
+              className="relative aspect-video overflow-hidden rounded-lg"
+            >
+              <img src={f.image} alt="map" className="h-full w-full object-cover" />
+              <div className="absolute inset-0 bg-black/40 flex flex-col justify-end p-4">
+                <span className="font-medium">{f.callsign}</span>
+                <span className="text-sm text-[#90adcb]">
+                  {f.origin} ➜ {f.destination}
+                </span>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
       <section className="space-y-4">
         <h2 className="font-heading text-2xl">Recent Activity</h2>
-        <div className="space-y-2">
+        <div className="flex gap-3 overflow-x-auto md:grid md:grid-cols-3">
           {activities.map(act => (
-            <div key={act.id} className="flex h-18 items-center gap-4 rounded-lg bg-[#101a23] p-4">
-              <img src={act.avatar} alt="avatar" className="h-14 w-14 rounded-full object-cover" />
+            <div
+              key={act.id}
+              className="flex min-w-[150px] items-center gap-3 rounded-lg bg-gray-800 p-3 flex-shrink-0"
+            >
+              <img src={act.avatar} alt="avatar" className="h-10 w-10 rounded-full object-cover" />
               <div className="flex flex-col">
-                <span className="font-medium">Pilot: {act.pilot}</span>
-                <span className="text-sm text-[#90adcb]">Flight: {act.flight}</span>
+                <span className="text-sm font-medium">{act.pilot}</span>
+                <span className="text-xs text-[#90adcb]">{act.flight}</span>
               </div>
             </div>
           ))}
@@ -52,15 +85,18 @@ export default function CommunityHub() {
 
       <section className="space-y-4">
         <h2 className="font-heading text-2xl">Upcoming Events</h2>
-        <div className="space-y-2">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
           {events.map(ev => (
-            <div key={ev.id} className="flex h-18 items-center gap-4 rounded-lg bg-[#101a23] p-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#223649]">
-                <Calendar className="h-6 w-6" />
+            <div
+              key={ev.id}
+              className="flex items-center gap-3 rounded-lg bg-[#101a23] p-4"
+            >
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#223649]">
+                <Calendar className="h-5 w-5" />
               </div>
               <div className="flex flex-col">
-                <span className="font-medium">{ev.name}</span>
-                <span className="text-sm text-[#90adcb]">{ev.date}</span>
+                <span className="text-sm font-medium">{ev.name}</span>
+                <span className="text-xs text-[#90adcb]">{ev.date}</span>
               </div>
             </div>
           ))}
