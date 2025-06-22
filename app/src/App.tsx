@@ -7,7 +7,7 @@ import ProtectedRoute from './ProtectedRoute'
 import FlightsPage from './FlightsPage'
 import CommunityHub from './components/CommunityHub'
 import ProfilePage from './ProfilePage'
-import SettingsSection from './SettingsSection'
+import SettingsPage from './SettingsPage'
 
 function Placeholder({ title }: { title: string }) {
   return <div className="p-6 text-white">{title}</div>
@@ -45,7 +45,7 @@ export default function App() {
             <Route path="flights" element={<FlightsPage />} />
             <Route path="community" element={<CommunityHub />} />
             <Route path="roster" element={<Placeholder title="Roster" />} />
-            <Route path="settings" element={<SettingsSection />} />
+            <Route path="settings" element={<SettingsPage />} />
             <Route path="profile" element={<ProfilePage />} />
           </Route>
         </Route>
