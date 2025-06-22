@@ -1,8 +1,9 @@
 import type { ButtonHTMLAttributes } from 'react'
 import { Button } from './ui'
 
-export interface CSVExportButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  data: any[]
+export interface CSVExportButtonProps
+  extends ButtonHTMLAttributes<HTMLButtonElement> {
+  data: Array<Record<string, unknown>>
   filename: string
 }
 
@@ -20,7 +21,9 @@ export function CSVExportButton({
     if (data.length === 0) return
     const headers = Object.keys(data[0])
     const rows = data.map(row =>
-      headers.map(h => JSON.stringify((row as Record<string, any>)[h] ?? '')).join(',')
+      headers
+        .map(h => JSON.stringify((row as Record<string, unknown>)[h] ?? ''))
+        .join(',')
     )
     const csv = [headers.join(','), ...rows].join('\n')
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })

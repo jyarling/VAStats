@@ -38,15 +38,17 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<LoginScreen />} />
-        <ProtectedRoute path="/" element={<ProtectedLayout />}>
-          <Route index element={<Navigate to="/dashboard" replace />} />
-          <Route path="dashboard" element={<Placeholder title="Dashboard" />} />
-          <Route path="flights" element={<FlightsPage />} />
-          <Route path="community" element={<CommunityHub />} />
-          <Route path="roster" element={<Placeholder title="Roster" />} />
-          <Route path="settings" element={<SettingsSection />} />
-          <Route path="profile" element={<ProfilePage />} />
-        </ProtectedRoute>
+        <Route element={<ProtectedRoute />}>
+          <Route path="/" element={<ProtectedLayout />}>
+            <Route index element={<Navigate to="/dashboard" replace />} />
+            <Route path="dashboard" element={<Placeholder title="Dashboard" />} />
+            <Route path="flights" element={<FlightsPage />} />
+            <Route path="community" element={<CommunityHub />} />
+            <Route path="roster" element={<Placeholder title="Roster" />} />
+            <Route path="settings" element={<SettingsSection />} />
+            <Route path="profile" element={<ProfilePage />} />
+          </Route>
+        </Route>
       </Routes>
     </BrowserRouter>
   )
