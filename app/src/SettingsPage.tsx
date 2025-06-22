@@ -74,7 +74,7 @@ function AcarsTab() {
       </div>
       <div className="flex items-center justify-between">
         <span>Enable Logging</span>
-        <Switch checked={acarsLogging} onChange={setAcarsLogging} className="" />
+        <Switch checked={acarsLogging} onChange={setAcarsLogging} />
       </div>
     </div>
   )
@@ -110,7 +110,7 @@ function AppTab() {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <span>Dark Theme</span>
-        <Switch checked={theme === 'dark'} onChange={toggleTheme} className="" />
+        <Switch checked={theme === 'dark'} onChange={toggleTheme} />
       </div>
       <div className="flex items-center justify-between">
         <span>Distance Unit</span>
@@ -159,11 +159,11 @@ function AppTab() {
       </div>
       <div className="flex items-center justify-between">
         <span>Push Notifications</span>
-        <Switch checked={notificationsPush} onChange={setNotificationsPush} className="" />
+        <Switch checked={notificationsPush} onChange={setNotificationsPush} />
       </div>
       <div className="flex items-center justify-between">
         <span>Email Notifications</span>
-        <Switch checked={notificationsEmail} onChange={setNotificationsEmail} className="" />
+        <Switch checked={notificationsEmail} onChange={setNotificationsEmail} />
       </div>
     </div>
   )

@@ -24,11 +24,7 @@ export default function SettingsSection() {
     <div className="w-full max-w-sm space-y-4 rounded-lg bg-gray-100 p-6 text-gray-900 dark:bg-gray-800 dark:text-white">
       <div className="flex items-center justify-between">
         <span>Dark Theme</span>
-        <Switch
-          checked={theme === 'dark'}
-          onChange={toggleTheme}
-          className={`${theme === 'dark' ? 'bg-blue-600' : 'bg-gray-200'} relative inline-flex h-6 w-11 items-center rounded-full transition-colors`}
-        />
+        <Switch checked={theme === 'dark'} onChange={toggleTheme} />
       </div>
       <div className="flex items-center justify-between">
         <label className="text-sm font-medium">Distance Unit</label>
