@@ -39,7 +39,7 @@ export default function CommunityHub() {
   ]
 
   return (
-    <div className="space-y-8 p-6 text-white">
+    <div className="space-y-8 p-6 text-gray-900 dark:text-white">
       <header className="space-y-1">
         <h1 className="font-heading text-3xl">Community Hub</h1>
         <p className="font-body text-[#90adcb]">Latest airline activity and events</p>
