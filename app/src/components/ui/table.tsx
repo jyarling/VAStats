@@ -7,7 +7,12 @@ export const Table = forwardRef<HTMLTableElement, HTMLAttributes<HTMLTableElemen
 })
 
 export function TableHeader({ className, ...props }: HTMLAttributes<HTMLTableSectionElement>) {
-  return <thead className={cn('bg-gray-100', className)} {...props} />
+  return (
+    <thead
+      className={cn('bg-gray-900 text-gray-300 sticky top-0', className)}
+      {...props}
+    />
+  )
 }
 
 export function TableBody({ className, ...props }: HTMLAttributes<HTMLTableSectionElement>) {

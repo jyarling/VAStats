@@ -95,7 +95,7 @@ export default function FlightsPage() {
         onDragEnd={handleDragEnd}
       >
         <table className="w-full border-collapse text-sm">
-          <thead className="bg-gray-900">
+          <thead className="bg-gray-900 text-gray-300 sticky top-0">
             <tr>
               <th className="px-3 py-2 text-left font-semibold text-gray-400">Pilot</th>
               <th className="px-3 py-2 text-left font-semibold text-gray-400">Origin</th>
