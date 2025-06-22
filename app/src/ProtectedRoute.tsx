@@ -1,5 +1,5 @@
 import { Route, Navigate } from 'react-router-dom'
-import { useAppSelector } from './store'
+import { useAppSelector } from './storeHooks'
 import { selectIsAuthenticated } from './authSlice'
 import type { ReactElement } from 'react'
 

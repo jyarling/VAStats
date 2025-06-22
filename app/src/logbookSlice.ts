@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { useAppSelector } from './store'
+import { useAppSelector } from './storeHooks'
 import type { RootState } from './store'
 
 export interface LogEntry {
