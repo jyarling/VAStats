@@ -12,6 +12,8 @@ export interface SettingsState {
   notificationsPush: boolean
   notificationsEmail: boolean
   acarsPollInterval: 1 | 5 | 10
+  acarsFormat: 'json' | 'xml'
+  acarsLogging: boolean
 }
 
 const initialState: SettingsState = {
@@ -23,6 +25,8 @@ const initialState: SettingsState = {
   notificationsPush: true,
   notificationsEmail: true,
   acarsPollInterval: 1,
+  acarsFormat: 'json',
+  acarsLogging: false,
 }
 
 const settingsSlice = createSlice({
@@ -56,6 +60,12 @@ const settingsSlice = createSlice({
     setAcarsPollInterval(state, action: PayloadAction<1 | 5 | 10>) {
       state.acarsPollInterval = action.payload
     },
+    setAcarsFormat(state, action: PayloadAction<'json' | 'xml'>) {
+      state.acarsFormat = action.payload
+    },
+    setAcarsLogging(state, action: PayloadAction<boolean>) {
+      state.acarsLogging = action.payload
+    },
   },
 })
 
@@ -69,6 +79,8 @@ export const {
   setNotificationsPush,
   setNotificationsEmail,
   setAcarsPollInterval,
+  setAcarsFormat,
+  setAcarsLogging,
 } = settingsSlice.actions
 export default settingsSlice.reducer
 
@@ -83,6 +95,8 @@ export const selectNotificationsEmail = (state: RootState) =>
   state.settings.notificationsEmail
 export const selectAcarsPollInterval = (state: RootState) =>
   state.settings.acarsPollInterval
+export const selectAcarsFormat = (state: RootState) => state.settings.acarsFormat
+export const selectAcarsLogging = (state: RootState) => state.settings.acarsLogging
 
 export function useSettings() {
   const dispatch = useAppDispatch()
@@ -94,6 +108,8 @@ export function useSettings() {
   const notificationsPush = useAppSelector(selectNotificationsPush)
   const notificationsEmail = useAppSelector(selectNotificationsEmail)
   const acarsPollInterval = useAppSelector(selectAcarsPollInterval)
+  const acarsFormat = useAppSelector(selectAcarsFormat)
+  const acarsLogging = useAppSelector(selectAcarsLogging)
   return {
     theme,
     distanceUnit,
@@ -103,6 +119,8 @@ export function useSettings() {
     notificationsPush,
     notificationsEmail,
     acarsPollInterval,
+    acarsFormat,
+    acarsLogging,
     toggleTheme: () => dispatch(toggleTheme()),
     setTheme: (value: 'light' | 'dark') => dispatch(setTheme(value)),
     setDistanceUnit: (unit: 'nm' | 'km') => dispatch(setDistanceUnit(unit)),
@@ -112,5 +130,7 @@ export function useSettings() {
     setNotificationsPush: (val: boolean) => dispatch(setNotificationsPush(val)),
     setNotificationsEmail: (val: boolean) => dispatch(setNotificationsEmail(val)),
     setAcarsPollInterval: (val: 1 | 5 | 10) => dispatch(setAcarsPollInterval(val)),
+    setAcarsFormat: (val: 'json' | 'xml') => dispatch(setAcarsFormat(val)),
+    setAcarsLogging: (val: boolean) => dispatch(setAcarsLogging(val)),
   }
 }
