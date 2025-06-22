@@ -1,6 +1,7 @@
-import { NavLink } from 'react-router-dom'
-import { Home, Plane, Users, Calendar, Settings, Shield, Menu } from 'lucide-react'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { Home, Plane, Users, Calendar, Settings, Shield, Menu, LogOut } from 'lucide-react'
 import { useState } from 'react'
+import { useAuth } from '../authSlice'
 
 interface SidebarProps {
   open?: boolean
@@ -28,6 +29,13 @@ export default function Sidebar({ open = false, onToggle }: SidebarProps) {
   const admin = { to: '/admin', label: 'Admin', icon: Shield }
 
   const AdminIcon = admin.icon
+  const auth = useAuth()
+  const navigate = useNavigate()
+
+  const handleSignOut = () => {
+    auth.logout()
+    navigate('/login')
+  }
   
   return (
     <aside
@@ -61,7 +69,7 @@ export default function Sidebar({ open = false, onToggle }: SidebarProps) {
             </NavLink>
           ))}
         </nav>
-        <div className="mt-auto px-2 pb-4">
+        <div className="mt-auto space-y-1 px-2 pb-4">
           <NavLink
             to={admin.to}
             className={({ isActive }) =>
@@ -73,6 +81,13 @@ export default function Sidebar({ open = false, onToggle }: SidebarProps) {
             <AdminIcon className="h-5 w-5" />
             <span className={`${isOpen ? 'block' : 'hidden lg:block'}`}>{admin.label}</span>
           </NavLink>
+          <button
+            onClick={handleSignOut}
+            className="flex w-full items-center gap-3 rounded-md p-2 text-gray-900 hover:bg-gray-200 dark:text-white dark:hover:bg-[#223649]"
+          >
+            <LogOut className="h-5 w-5" />
+            <span className={`${isOpen ? 'block' : 'hidden lg:block'}`}>Sign Out</span>
+          </button>
         </div>
       </div>
     </aside>
