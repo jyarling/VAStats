@@ -1,7 +1,7 @@
 import { Button, Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from './components'
 import { useAppSelector } from './storeHooks'
 import { selectLogbook } from './logbookSlice'
-import { downloadCsv } from './downloadCsv'
+import { downloadCsv } from './utils/downloadCsv'
 
 export function LogbookPage() {
   const flights = useAppSelector(selectLogbook)
@@ -10,7 +10,7 @@ export function LogbookPage() {
     <div className="space-y-4 p-4">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Logbook</h1>
-        <Button onClick={() => downloadCsv(flights)}>Export CSV</Button>
+        <Button onClick={() => downloadCsv(flights, 'logbook.csv')}>Export CSV</Button>
       </div>
       <Table className="bg-white">
         <TableHeader>

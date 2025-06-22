@@ -43,9 +43,12 @@ export default acarsSlice.reducer
 export const selectIsFlying = (state: RootState) => state.acars.isFlying
 export const selectData = (state: RootState) => state.acars.data
 
+let feedInterval: NodeJS.Timeout | null = null
+
 export const startAcarsFeed = () =>
   (dispatch: AppDispatch, getState: () => RootState) => {
-    setInterval(() => {
+    if (feedInterval) return
+    feedInterval = setInterval(() => {
       const { isFlying } = getState().acars
       if (isFlying) {
         dispatch(
@@ -60,6 +63,13 @@ export const startAcarsFeed = () =>
     }, 1000)
   }
 
+export const stopAcarsFeed = () => () => {
+  if (feedInterval) {
+    clearInterval(feedInterval)
+    feedInterval = null
+  }
+}
+
 export function useAcars() {
   const dispatch = useAppDispatch()
   const isFlying = useAppSelector(selectIsFlying)
@@ -70,5 +80,6 @@ export function useAcars() {
     startFlight: () => dispatch(startFlight()),
     endFlight: () => dispatch(endFlight()),
     startAcarsFeed: () => dispatch(startAcarsFeed()),
+    stopAcarsFeed: () => dispatch(stopAcarsFeed()),
   }
 }

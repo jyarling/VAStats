@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { cn } from '../utils'
 
 export interface SwitchProps {
@@ -9,6 +9,10 @@ export interface SwitchProps {
 
 export function Switch({ checked = false, onChange, className }: SwitchProps) {
   const [state, setState] = useState(checked)
+
+  useEffect(() => {
+    setState(checked)
+  }, [checked])
   const toggle = () => {
     const value = !state
     setState(value)

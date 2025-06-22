@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import {
   DndContext,
   closestCenter,
@@ -99,6 +99,10 @@ export function DataTable<T extends { id: number | string }>({
   const [rows, setRows] = useState(data)
   const [filter, setFilter] = useState('')
   const [page, setPage] = useState(0)
+
+  useEffect(() => {
+    setRows(data)
+  }, [data])
   
   const sensors = useSensors(
     useSensor(PointerSensor),

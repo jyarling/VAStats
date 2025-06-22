@@ -1,10 +1,21 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Bell } from 'lucide-react'
 import { useNotifications } from '../notificationsSlice'
 
 export default function NotificationBell() {
   const { unreadCount } = useNotifications()
   const [open, setOpen] = useState(false)
+  const bellRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (bellRef.current && !bellRef.current.contains(e.target as Node)) {
+        setOpen(false)
+      }
+    }
+    document.addEventListener('click', handleClick)
+    return () => document.removeEventListener('click', handleClick)
+  }, [])
 
   const notifications = [
     'New PIREP received',
@@ -12,7 +23,7 @@ export default function NotificationBell() {
   ]
 
   return (
-    <div className="relative">
+    <div className="relative" ref={bellRef}>
       <button
         className="relative rounded-full p-2 text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
         onClick={() => setOpen(!open)}
