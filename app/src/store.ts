@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import type { TypedUseSelectorHook } from 'react-redux'
 import authReducer from './authSlice'
 import settingsReducer from './settingsSlice'
+import acarsReducer from './acarsSlice'
 import { flightsApi } from './flightsSlice'
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     settings: settingsReducer,
+    acars: acarsReducer,
     [flightsApi.reducerPath]: flightsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
