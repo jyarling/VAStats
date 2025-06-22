@@ -2,8 +2,18 @@ import { Calendar } from 'lucide-react'
 
 export default function CommunityHub() {
   const activities = [
-    { id: 1, pilot: 'John Doe', flight: 'VA123', avatar: 'https://via.placeholder.com/56' },
-    { id: 2, pilot: 'Jane Smith', flight: 'VA456', avatar: 'https://via.placeholder.com/56' },
+    {
+      id: 1,
+      pilot: 'John Doe',
+      flight: 'VA123',
+      avatar: '/images/placeholder-56.svg',
+    },
+    {
+      id: 2,
+      pilot: 'Jane Smith',
+      flight: 'VA456',
+      avatar: '/images/placeholder-56.svg',
+    },
   ]
 
   const events = [
@@ -21,7 +31,7 @@ export default function CommunityHub() {
       <section className="space-y-4">
         <h2 className="font-heading text-2xl">Active Flights</h2>
         <div className="aspect-video w-full overflow-hidden rounded-lg bg-[#223649]">
-          <img src="https://via.placeholder.com/800x450" alt="Map" className="h-full w-full object-cover" />
+          <img src="/images/placeholder-800x450.svg" alt="Map" className="h-full w-full object-cover" />
         </div>
       </section>
 
