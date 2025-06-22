@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
-import { Switch, Listbox } from '@headlessui/react'
+import { Listbox } from '@headlessui/react'
+import { Switch } from './components'
 import { Check, ChevronDown } from 'lucide-react'
 import { useSettings } from './settingsSlice'
 
@@ -27,12 +28,7 @@ export default function SettingsSection() {
           checked={theme === 'dark'}
           onChange={toggleTheme}
           className={`${theme === 'dark' ? 'bg-blue-600' : 'bg-gray-200'} relative inline-flex h-6 w-11 items-center rounded-full transition-colors`}
-        >
-          <span className="sr-only">Toggle dark theme</span>
-          <span
-            className={`${theme === 'dark' ? 'translate-x-5' : 'translate-x-0'} inline-block h-5 w-5 transform rounded-full bg-white transition`}
-          />
-        </Switch>
+        />
       </div>
       <div className="flex items-center justify-between">
         <label className="text-sm font-medium">Distance Unit</label>

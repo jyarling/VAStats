@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { Switch as HeadlessSwitch } from '@headlessui/react'
 import { cn } from '../utils'
 
 export interface SwitchProps {
@@ -8,33 +8,23 @@ export interface SwitchProps {
 }
 
 export function Switch({ checked = false, onChange, className }: SwitchProps) {
-  const [state, setState] = useState(checked)
-
-  useEffect(() => {
-    setState(checked)
-  }, [checked])
-  const toggle = () => {
-    const value = !state
-    setState(value)
-    onChange?.(value)
-  }
   return (
-    <button
-      role="switch"
-      aria-checked={state}
-      onClick={toggle}
+    <HeadlessSwitch
+      checked={checked}
+      onChange={onChange}
       className={cn(
-        'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500',
-        state ? 'bg-blue-600' : 'bg-gray-200',
+        checked ? 'bg-blue-600' : 'bg-gray-200',
+        'relative inline-flex h-6 w-11 items-center rounded-full transition-colors',
         className,
       )}
     >
+      <span className="sr-only">Toggle</span>
       <span
         className={cn(
-          'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow transition',
-          state ? 'translate-x-5' : 'translate-x-0',
+          checked ? 'translate-x-5' : 'translate-x-0',
+          'inline-block h-5 w-5 transform rounded-full bg-white transition',
         )}
       />
-    </button>
+    </HeadlessSwitch>
   )
 }
