@@ -20,8 +20,8 @@ export function Switch({ checked = false, onChange, className }: SwitchProps) {
       aria-checked={state}
       onClick={toggle}
       className={cn(
-        'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500',
-        state ? 'bg-blue-600' : 'bg-gray-200',
+        'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-primary',
+        state ? 'bg-primary' : 'bg-gray-600',
         className,
       )}
     >

@@ -10,7 +10,7 @@ export const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
         type="radio"
         ref={ref}
         className={cn(
-          'h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500',
+          'h-4 w-4 border-primary text-primary focus:ring-primary',
           className,
         )}
         {...props}

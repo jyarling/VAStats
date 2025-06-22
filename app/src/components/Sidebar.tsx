@@ -26,7 +26,7 @@ const items: Item[] = [
 
 export function Sidebar() {
   return (
-    <nav className="w-48 space-y-1 bg-gray-100 p-4">
+    <nav className="w-48 space-y-1 bg-background p-4">
       {items.map(({ to, label, icon: Icon }) => (
         <NavLink
           key={to}
@@ -36,8 +36,8 @@ export function Sidebar() {
             cn(
               'flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium',
               isActive
-                ? 'bg-blue-600 text-white'
-                : 'text-gray-700 hover:bg-gray-200'
+                ? 'bg-primary text-white'
+                : 'text-muted hover:bg-primary/60'
             )
           }
         >
