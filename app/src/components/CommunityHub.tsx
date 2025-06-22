@@ -23,13 +23,13 @@ export default function CommunityHub() {
       id: 1,
       pilot: 'John Doe',
       flight: 'VA123',
-      avatar: '/images/placeholder-56.svg',
+      avatar: '/images/profile.png',
     },
     {
       id: 2,
       pilot: 'Jane Smith',
       flight: 'VA456',
-      avatar: '/images/placeholder-56.svg',
+      avatar: '/images/profile.png',
     },
   ]
 
