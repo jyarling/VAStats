@@ -1,85 +1,31 @@
-import "./App.css";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import ActiveFlights from "./ActiveFlights";
-import UiElements from "./UiElements";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { useState } from 'react'
+import Sidebar from './components/Sidebar'
+import CommunityHub from './components/CommunityHub'
+import ActiveFlights from './ActiveFlights'
+import UiElements from './UiElements'
 
-interface AcarsMessage {
-  id: number;
-  time: string;
-  sender: string;
-  message: string;
+function Placeholder({ title }: { title: string }) {
+  return <div className="p-6 text-white">{title}</div>
 }
 
-const dummyData: AcarsMessage[] = [
-  {
-    id: 1,
-    time: "12:00Z",
-    sender: "ATC",
-    message: "CLEARED FL350"
-  },
-  {
-    id: 2,
-    time: "12:05Z",
-    sender: "DISP",
-    message: "WEATHER UPDATE"
-  },
-  {
-    id: 3,
-    time: "12:10Z",
-    sender: "ATC",
-    message: "CONTACT CENTER"
-  }
-];
+export default function App() {
+  const [open, setOpen] = useState(false)
 
-function Home() {
-  return (
-    <div className="App">
-      <h1>Electron ACARS Viewer</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Time</th>
-            <th>Sender</th>
-            <th>Message</th>
-          </tr>
-        </thead>
-        <tbody>
-          {dummyData.map((item) => (
-            <tr key={item.id}>
-              <td>{item.time}</td>
-              <td>{item.sender}</td>
-              <td>{item.message}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
-function App() {
   return (
     <Router>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/active-flights">Active Flights</Link>
-          </li>
-          <li>
-            <Link to="/elements">UI Elements</Link>
-          </li>
-        </ul>
-      </nav>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/active-flights" element={<ActiveFlights />} />
-        <Route path="/elements" element={<UiElements />} />
-      </Routes>
+      <Sidebar open={open} onToggle={setOpen} />
+      <div className={`ml-16 transition-all lg:ml-80 ${open ? 'ml-80' : 'ml-16'}`}> 
+        <Routes>
+          <Route path="/" element={<Placeholder title="Home" />} />
+          <Route path="/flights" element={<ActiveFlights />} />
+          <Route path="/community" element={<CommunityHub />} />
+          <Route path="/roster" element={<Placeholder title="Roster" />} />
+          <Route path="/settings" element={<Placeholder title="Settings" />} />
+          <Route path="/elements" element={<UiElements />} />
+          <Route path="/admin" element={<Placeholder title="Admin" />} />
+        </Routes>
+      </div>
     </Router>
-  );
+  )
 }
-
-export default App;
