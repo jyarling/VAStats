@@ -146,7 +146,7 @@ export function DataTable<T extends { id: number | string }>({
           setPage(0)
         }}
         placeholder="Filter..."
-        className="w-full rounded-md border px-3 py-2"
+        className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
       />
       <DndContext
         sensors={sensors}

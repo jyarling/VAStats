@@ -8,7 +8,7 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 
 const variants: Record<NonNullable<ButtonProps['variant']>, string> = {
   default: 'bg-blue-600 text-white hover:bg-blue-500',
-  outline: 'border border-gray-300 hover:bg-gray-100',
+  outline: 'border border-gray-300 hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-700',
   destructive: 'bg-red-600 text-white hover:bg-red-500',
 }
 

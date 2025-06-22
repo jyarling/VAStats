@@ -22,7 +22,7 @@ function ProtectedLayout() {
         className={`flex flex-1 flex-col transition-all lg:ml-80 ${open ? 'ml-80' : 'ml-16'}`}
       >
         <Header />
-        <main className="flex-1 p-4 text-white">
+        <main className="flex-1 p-4 text-gray-900 dark:text-white">
           <Outlet />
         </main>
       </div>

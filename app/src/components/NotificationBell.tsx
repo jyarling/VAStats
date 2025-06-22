@@ -28,7 +28,7 @@ export default function NotificationBell() {
         className="relative rounded-full p-2"
         onClick={() => setOpen(!open)}
       >
-        <Bell className="h-6 w-6 text-white" />
+        <Bell className="h-6 w-6 text-gray-900 dark:text-white" />
         {unreadCount > 0 && (
           <span className="absolute top-0 right-0 flex h-3 w-3 items-center justify-center rounded-full bg-red-600 text-xs text-white">
             {unreadCount}

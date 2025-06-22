@@ -9,7 +9,7 @@ export default function PilotCard({ pilot }: PilotCardProps) {
   const { avatarUrl, name, callsign, totalHours } = pilot
 
   return (
-    <div className="flex flex-col items-center rounded-lg bg-gray-800 px-4 py-6 text-white">
+    <div className="flex flex-col items-center rounded-lg bg-white px-4 py-6 text-gray-900 dark:bg-gray-800 dark:text-white">
       {avatarUrl ? (
         <img
           src={avatarUrl}

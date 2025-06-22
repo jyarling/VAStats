@@ -31,7 +31,7 @@ export default function SettingsPage() {
   }, [theme])
 
   return (
-    <div className="max-w-md space-y-4 rounded-lg bg-gray-800 p-6 text-white">
+    <div className="max-w-md space-y-4 rounded-lg bg-gray-100 p-6 text-gray-900 dark:bg-gray-800 dark:text-white">
       <div className="flex items-center justify-between">
         <span>Dark Theme</span>
         <Switch
@@ -48,7 +48,7 @@ export default function SettingsPage() {
         <select
           value={distanceUnit}
           onChange={(e) => setDistanceUnit(e.target.value as 'nm' | 'km')}
-          className="rounded-md bg-gray-700 p-2"
+          className="rounded-md bg-white p-2 text-gray-900 dark:bg-gray-700 dark:text-white"
         >
           <option value="nm">Nautical Miles</option>
           <option value="km">Kilometers</option>
@@ -60,7 +60,7 @@ export default function SettingsPage() {
         <select
           value={speedUnit}
           onChange={(e) => setSpeedUnit(e.target.value as 'kt' | 'kmh')}
-          className="rounded-md bg-gray-700 p-2"
+          className="rounded-md bg-white p-2 text-gray-900 dark:bg-gray-700 dark:text-white"
         >
           <option value="kt">Knots</option>
           <option value="kmh">km/h</option>
@@ -72,7 +72,7 @@ export default function SettingsPage() {
         <select
           value={altitudeUnit}
           onChange={(e) => setAltitudeUnit(e.target.value as 'ft' | 'm')}
-          className="rounded-md bg-gray-700 p-2"
+          className="rounded-md bg-white p-2 text-gray-900 dark:bg-gray-700 dark:text-white"
         >
           <option value="ft">Feet</option>
           <option value="m">Meters</option>
@@ -84,7 +84,7 @@ export default function SettingsPage() {
         <select
           value={mapStyle}
           onChange={(e) => setMapStyle(e.target.value as 'day' | 'night' | 'auto')}
-          className="rounded-md bg-gray-700 p-2"
+          className="rounded-md bg-white p-2 text-gray-900 dark:bg-gray-700 dark:text-white"
         >
           <option value="day">Day</option>
           <option value="night">Night</option>
@@ -121,7 +121,7 @@ export default function SettingsPage() {
           onChange={(e) =>
             setAcarsPollInterval(parseInt(e.target.value) as 1 | 5 | 10)
           }
-          className="rounded-md bg-gray-700 p-2"
+          className="rounded-md bg-white p-2 text-gray-900 dark:bg-gray-700 dark:text-white"
         >
           <option value={1}>1s</option>
           <option value={5}>5s</option>
