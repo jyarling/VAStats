@@ -20,10 +20,18 @@ const fleetSlice = createSlice({
     addAircraft(state, action: PayloadAction<Aircraft>) {
       state.push(action.payload)
     },
+    markMaintained(state, action: PayloadAction<string>) {
+      const tail = action.payload
+      const ac = state.find((a) => a.tail === tail)
+      if (ac) {
+        ac.status = 'OK'
+        ac.hours = 20
+      }
+    },
   },
 })
 
-export const { addAircraft } = fleetSlice.actions
+export const { addAircraft, markMaintained } = fleetSlice.actions
 export default fleetSlice.reducer
 
 export const selectFleet = (state: RootState) => state.fleet
@@ -34,5 +42,6 @@ export function useFleet() {
   return {
     aircraft,
     addAircraft: (a: Aircraft) => dispatch(addAircraft(a)),
+    markMaintained: (tail: string) => dispatch(markMaintained(tail)),
   }
 }
