@@ -1,6 +1,6 @@
 import { Button, Gauge } from './components'
 import { startFlight, endFlight } from './acarsSlice'
-import { useAppDispatch } from './store'
+import { useAppDispatch } from './storeHooks'
 
 export default function LiveFlightPage() {
   const dispatch = useAppDispatch()

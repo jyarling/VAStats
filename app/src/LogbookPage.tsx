@@ -1,5 +1,5 @@
 import { Button, Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from './components'
-import { useAppSelector } from './store'
+import { useAppSelector } from './storeHooks'
 import { selectLogbook } from './logbookSlice'
 import { downloadCsv } from './downloadCsv'
 

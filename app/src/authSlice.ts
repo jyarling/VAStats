@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { useAppDispatch, useAppSelector } from './store'
+import { useAppDispatch, useAppSelector } from './storeHooks'
 import type { RootState } from './store'
 
 export interface AuthState {
