@@ -1,16 +1,59 @@
 import { useState, useMemo } from 'react'
 import { User, Pencil, Trash } from 'lucide-react'
 import {
-  DragDropContext,
-  Droppable,
-  Draggable,
-  type DropResult,
-  type DroppableProvided,
-  type DraggableProvided,
-} from 'react-beautiful-dnd'
+  DndContext,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+  closestCenter,
+} from '@dnd-kit/core'
+import {
+  SortableContext,
+  useSortable,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 import { useAppDispatch, useAppSelector } from './storeHooks'
-import { selectFlights, reorderFlights } from './flightsSlice'
+import { selectFlights, reorderFlights, type Flight } from './flightsSlice'
 import { Button, Input } from './components'
+
+function SortableRow({ flight }: { flight: Flight }) {
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
+    id: flight.id,
+  })
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  }
+  return (
+    <tr
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      className="bg-gray-800 text-white border-b last:border-b-0"
+    >
+      <td className="px-3 py-2">
+        <span className="flex items-center gap-2">
+          <User className="h-4 w-4" />
+          {flight.pilot}
+        </span>
+      </td>
+      <td className="px-3 py-2">{flight.origin}</td>
+      <td className="px-3 py-2">{flight.destination}</td>
+      <td className="px-3 py-2">{flight.aircraft}</td>
+      <td className="px-3 py-2 space-x-2 text-right">
+        <Button size="icon" variant="outline" onClick={() => {}}>
+          <Pencil className="h-4 w-4" />
+        </Button>
+        <Button size="icon" variant="destructive" onClick={() => {}}>
+          <Trash className="h-4 w-4" />
+        </Button>
+      </td>
+    </tr>
+  )
+}
 
 export default function FlightsPage() {
   const flights = useAppSelector(selectFlights)
@@ -28,13 +71,13 @@ export default function FlightsPage() {
     )
   }, [flights, filter])
 
-  function handleDragEnd(result: DropResult) {
-    const { source, destination } = result
-    if (!destination) return
-    const activeId = filtered[source.index].id
-    const overId = filtered[destination.index].id
-    const from = flights.findIndex((f) => f.id === activeId)
-    const to = flights.findIndex((f) => f.id === overId)
+  const sensors = useSensors(useSensor(PointerSensor))
+
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event
+    if (!over) return
+    const from = flights.findIndex((f) => f.id === active.id)
+    const to = flights.findIndex((f) => f.id === over.id)
     if (from !== to) dispatch(reorderFlights({ from, to }))
   }
 
@@ -46,7 +89,11 @@ export default function FlightsPage() {
         value={filter}
         onChange={(e) => setFilter(e.target.value)}
       />
-      <DragDropContext onDragEnd={handleDragEnd}>
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragEnd={handleDragEnd}
+      >
         <table className="w-full border-collapse text-sm">
           <thead className="bg-gray-900">
             <tr>
@@ -57,52 +104,18 @@ export default function FlightsPage() {
               <th className="px-3 py-2 text-right font-semibold text-gray-400">Actions</th>
             </tr>
           </thead>
-          <Droppable droppableId="flights">
-            {(provided: DroppableProvided) => (
-              <tbody
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-              >
-                {filtered.map((flight, idx) => (
-                  <Draggable
-                    key={flight.id}
-                    draggableId={flight.id.toString()}
-                    index={idx}
-                  >
-                    {(provided: DraggableProvided) => (
-                      <tr
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        className="bg-gray-800 text-white border-b last:border-b-0"
-                      >
-                        <td className="px-3 py-2">
-                          <span className="flex items-center gap-2">
-                            <User className="h-4 w-4" />
-                            {flight.pilot}
-                          </span>
-                        </td>
-                        <td className="px-3 py-2">{flight.origin}</td>
-                        <td className="px-3 py-2">{flight.destination}</td>
-                        <td className="px-3 py-2">{flight.aircraft}</td>
-                        <td className="px-3 py-2 space-x-2 text-right">
-                          <Button size="icon" variant="outline" onClick={() => {}}>
-                            <Pencil className="h-4 w-4" />
-                          </Button>
-                          <Button size="icon" variant="destructive" onClick={() => {}}>
-                            <Trash className="h-4 w-4" />
-                          </Button>
-                        </td>
-                      </tr>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </tbody>
-            )}
-          </Droppable>
+          <SortableContext
+            items={filtered.map((f) => f.id)}
+            strategy={verticalListSortingStrategy}
+          >
+            <tbody>
+              {filtered.map((flight) => (
+                <SortableRow key={flight.id} flight={flight} />
+              ))}
+            </tbody>
+          </SortableContext>
         </table>
-      </DragDropContext>
+      </DndContext>
       </div>
   )
 }
