@@ -4,6 +4,7 @@ import type { TypedUseSelectorHook } from 'react-redux'
 import authReducer from './authSlice'
 import settingsReducer from './settingsSlice'
 import acarsReducer from './acarsSlice'
+import logbookReducer from './logbookSlice'
 import { flightsApi } from './flightsSlice'
 
 export const store = configureStore({
@@ -11,6 +12,7 @@ export const store = configureStore({
     auth: authReducer,
     settings: settingsReducer,
     acars: acarsReducer,
+    logbook: logbookReducer,
     [flightsApi.reducerPath]: flightsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
