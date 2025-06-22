@@ -1,7 +1,7 @@
 import { HashRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom'
 import { useState } from 'react'
 import Sidebar from './components/Sidebar'
-import { NotificationBell } from './components'
+import { Header } from './components'
 import LoginScreen from './LoginScreen'
 import ProtectedRoute from './ProtectedRoute'
 import FlightsPage from './FlightsPage'
@@ -22,9 +22,7 @@ function ProtectedLayout() {
       <div
         className={`flex flex-1 flex-col transition-all lg:ml-80 ${open ? 'ml-80' : 'ml-16'}`}
       >
-        <header className="flex h-16 items-center justify-end border-b bg-white px-4 shadow dark:bg-[#101a23]">
-          <NotificationBell />
-        </header>
+        <Header />
         <main className="flex-1 p-4 text-white">
           <Outlet />
         </main>
