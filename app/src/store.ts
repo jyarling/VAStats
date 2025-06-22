@@ -7,6 +7,7 @@ import acarsReducer from './acarsSlice'
 import logbookReducer from './logbookSlice'
 import fleetReducer from './fleetSlice'
 import { flightsApi } from './flightsSlice'
+import notificationsReducer from './notificationsSlice'
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
     acars: acarsReducer,
     logbook: logbookReducer,
     fleet: fleetReducer,
+    notifications: notificationsReducer,
     [flightsApi.reducerPath]: flightsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
