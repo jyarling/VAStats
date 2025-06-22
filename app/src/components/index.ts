@@ -1,3 +1,4 @@
 export * from './DataTable'
+export * from './Pagination'
 export * from './ui'
 export * from './maps'
