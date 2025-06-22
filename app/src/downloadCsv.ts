@@ -1,4 +1,4 @@
-export function downloadCsv<T extends Record<string, any>>(data: T[]) {
+export function downloadCsv<T extends Record<string, unknown>>(data: T[]) {
   if (data.length === 0) return
   const headers = Object.keys(data[0])
   const rows = data.map((row) =>

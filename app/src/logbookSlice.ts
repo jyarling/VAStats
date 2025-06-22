@@ -8,6 +8,7 @@ export interface LogEntry {
   route: string
   duration: string
   landingRate: number
+  [key: string]: unknown
 }
 
 const initialState: LogEntry[] = [
