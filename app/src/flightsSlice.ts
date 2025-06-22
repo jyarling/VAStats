@@ -1,4 +1,7 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createSlice } from '@reduxjs/toolkit'
+import type { PayloadAction } from '@reduxjs/toolkit'
+import { useAppDispatch, useAppSelector } from './storeHooks'
+import type { RootState } from './store'
 
 export interface Flight {
   id: number
@@ -8,24 +11,38 @@ export interface Flight {
   aircraft: string
 }
 
-const flights: Flight[] = [
+const initialState: Flight[] = [
   { id: 1, pilot: 'John Doe', origin: 'KJFK', destination: 'KLAX', aircraft: 'B737' },
   { id: 2, pilot: 'Jane Smith', origin: 'EGLL', destination: 'EHAM', aircraft: 'A320' },
   { id: 3, pilot: 'Bob Brown', origin: 'KSEA', destination: 'CYYZ', aircraft: 'B777' },
 ]
 
-export const flightsApi = createApi({
-  reducerPath: 'flightsApi',
-  baseQuery: fetchBaseQuery(),
-  endpoints: (builder) => ({
-    getActiveFlights: builder.query<Flight[], void>({
-      // Normally this would be `query: () => '/api/active-flights'`.
-      // For now return stubbed data.
-      async queryFn() {
-        return { data: flights }
-      },
-    }),
-  }),
+const flightsSlice = createSlice({
+  name: 'flights',
+  initialState,
+  reducers: {
+    reorderFlights(
+      state,
+      action: PayloadAction<{ from: number; to: number }>,
+    ) {
+      const { from, to } = action.payload
+      const [flight] = state.splice(from, 1)
+      state.splice(to, 0, flight)
+    },
+  },
 })
 
-export const { useGetActiveFlightsQuery } = flightsApi
+export const { reorderFlights } = flightsSlice.actions
+export default flightsSlice.reducer
+
+export const selectFlights = (state: RootState) => state.flights
+
+export function useFlights() {
+  const dispatch = useAppDispatch()
+  const flights = useAppSelector(selectFlights)
+  return {
+    flights,
+    reorder: (from: number, to: number) =>
+      dispatch(reorderFlights({ from, to })),
+  }
+}

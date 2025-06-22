@@ -4,7 +4,7 @@ import settingsReducer from './settingsSlice'
 import acarsReducer from './acarsSlice'
 import logbookReducer from './logbookSlice'
 import fleetReducer from './fleetSlice'
-import { flightsApi } from './flightsSlice'
+import flightsReducer from './flightsSlice'
 import notificationsReducer from './notificationsSlice'
 
 export const store = configureStore({
@@ -14,11 +14,10 @@ export const store = configureStore({
     acars: acarsReducer,
     logbook: logbookReducer,
     fleet: fleetReducer,
+    flights: flightsReducer,
     notifications: notificationsReducer,
-    [flightsApi.reducerPath]: flightsApi.reducer,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(flightsApi.middleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 })
 
 export type RootState = ReturnType<typeof store.getState>

@@ -1,19 +1,20 @@
 import { useState, useMemo } from 'react'
 import { User, Pencil, Trash } from 'lucide-react'
-import { useGetActiveFlightsQuery } from './flightsSlice'
 import {
-  Table,
-  TableHeader,
-  TableRow,
-  TableHead,
-  TableBody,
-  TableCell,
-  Button,
-  Input,
-} from './components'
+  DragDropContext,
+  Droppable,
+  Draggable,
+  type DropResult,
+  type DroppableProvided,
+  type DraggableProvided,
+} from 'react-beautiful-dnd'
+import { useAppDispatch, useAppSelector } from './storeHooks'
+import { selectFlights, reorderFlights } from './flightsSlice'
+import { Button, Input } from './components'
 
 export default function FlightsPage() {
-  const { data: flights = [], isLoading } = useGetActiveFlightsQuery()
+  const flights = useAppSelector(selectFlights)
+  const dispatch = useAppDispatch()
   const [filter, setFilter] = useState('')
 
   const filtered = useMemo(() => {
@@ -27,8 +28,14 @@ export default function FlightsPage() {
     )
   }, [flights, filter])
 
-  if (isLoading) {
-    return <div className="p-4">Loading...</div>
+  function handleDragEnd(result: DropResult) {
+    const { source, destination } = result
+    if (!destination) return
+    const activeId = filtered[source.index].id
+    const overId = filtered[destination.index].id
+    const from = flights.findIndex((f) => f.id === activeId)
+    const to = flights.findIndex((f) => f.id === overId)
+    if (from !== to) dispatch(reorderFlights({ from, to }))
   }
 
   return (
@@ -39,40 +46,64 @@ export default function FlightsPage() {
         value={filter}
         onChange={(e) => setFilter(e.target.value)}
       />
-      <Table className="bg-white">
-        <TableHeader>
-          <TableRow>
-            <TableHead>Pilot</TableHead>
-            <TableHead>Origin</TableHead>
-            <TableHead>Destination</TableHead>
-            <TableHead>Aircraft</TableHead>
-            <TableHead className="text-right">Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {filtered.map((flight) => (
-            <TableRow key={flight.id}>
-              <TableCell>
-                <span className="flex items-center gap-2">
-                  <User className="h-4 w-4" />
-                  {flight.pilot}
-                </span>
-              </TableCell>
-              <TableCell>{flight.origin}</TableCell>
-              <TableCell>{flight.destination}</TableCell>
-              <TableCell>{flight.aircraft}</TableCell>
-              <TableCell className="space-x-2 text-right">
-                <Button size="icon" variant="outline" onClick={() => {}}>
-                  <Pencil className="h-4 w-4" />
-                </Button>
-                <Button size="icon" variant="destructive" onClick={() => {}}>
-                  <Trash className="h-4 w-4" />
-                </Button>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </div>
+      <DragDropContext onDragEnd={handleDragEnd}>
+        <table className="w-full border-collapse text-sm">
+          <thead className="bg-gray-900">
+            <tr>
+              <th className="px-3 py-2 text-left font-semibold text-gray-400">Pilot</th>
+              <th className="px-3 py-2 text-left font-semibold text-gray-400">Origin</th>
+              <th className="px-3 py-2 text-left font-semibold text-gray-400">Destination</th>
+              <th className="px-3 py-2 text-left font-semibold text-gray-400">Aircraft</th>
+              <th className="px-3 py-2 text-right font-semibold text-gray-400">Actions</th>
+            </tr>
+          </thead>
+          <Droppable droppableId="flights">
+            {(provided: DroppableProvided) => (
+              <tbody
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+              >
+                {filtered.map((flight, idx) => (
+                  <Draggable
+                    key={flight.id}
+                    draggableId={flight.id.toString()}
+                    index={idx}
+                  >
+                    {(provided: DraggableProvided) => (
+                      <tr
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        className="bg-gray-800 text-white border-b last:border-b-0"
+                      >
+                        <td className="px-3 py-2">
+                          <span className="flex items-center gap-2">
+                            <User className="h-4 w-4" />
+                            {flight.pilot}
+                          </span>
+                        </td>
+                        <td className="px-3 py-2">{flight.origin}</td>
+                        <td className="px-3 py-2">{flight.destination}</td>
+                        <td className="px-3 py-2">{flight.aircraft}</td>
+                        <td className="px-3 py-2 space-x-2 text-right">
+                          <Button size="icon" variant="outline" onClick={() => {}}>
+                            <Pencil className="h-4 w-4" />
+                          </Button>
+                          <Button size="icon" variant="destructive" onClick={() => {}}>
+                            <Trash className="h-4 w-4" />
+                          </Button>
+                        </td>
+                      </tr>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </tbody>
+            )}
+          </Droppable>
+        </table>
+      </DragDropContext>
+      </div>
   )
 }
+
