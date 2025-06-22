@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { Button } from './components'
+import SettingsSection from './SettingsSection'
 import { useAuth } from './authSlice'
 
 export function ProfilePage() {
@@ -13,7 +14,7 @@ export function ProfilePage() {
   }
 
   return (
-    <div className="flex h-screen items-center justify-center bg-gray-900">
+    <div className="flex h-screen flex-col items-center justify-center space-y-4 bg-gray-900">
       <div className="w-full max-w-sm space-y-4 rounded-lg bg-[#101a23] p-6 text-white">
         <img
           src={`https://ui-avatars.com/api/?name=${user.username}`}
@@ -28,6 +29,7 @@ export function ProfilePage() {
           Log Out
         </Button>
       </div>
+      <SettingsSection />
     </div>
   )
 }
