@@ -1,8 +1,13 @@
 import { useState } from 'react'
-import { Button, Dialog, Input, Label } from './components'
+import { Button, Dialog, Input, Label, Select } from './components'
 import { useFleet } from './fleetSlice'
 
 type Status = 'OK' | 'Needs Maintenance'
+
+const statusOptions = [
+  { value: 'OK', label: 'OK' },
+  { value: 'Needs Maintenance', label: 'Needs Maintenance' },
+] as const
 
 export default function FleetPage() {
   const { aircraft, addAircraft } = useFleet()
@@ -62,15 +67,12 @@ export default function FleetPage() {
             onChange={(e) => setHours(e.target.value)}
           />
           <Label htmlFor="status">Status</Label>
-          <select
-            id="status"
-            className="w-full rounded-md border border-gray-300 p-2 text-sm"
+          <Select
             value={status}
-            onChange={(e) => setStatus(e.target.value as Status)}
-          >
-            <option value="OK">OK</option>
-            <option value="Needs Maintenance">Needs Maintenance</option>
-          </select>
+            onChange={(val) => setStatus(val as Status)}
+            options={statusOptions}
+            className="w-full"
+          />
           <Button className="w-full" onClick={handleSubmit}>
             Save
           </Button>

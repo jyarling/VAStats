@@ -1,7 +1,39 @@
 import { useState, useEffect } from 'react'
-import { Tabs, Switch, Input, Label, Button } from './components'
+import { Tabs, Switch, Input, Label, Button, Select } from './components'
 import { useSettings } from './settingsSlice'
 import { useAuth } from './authSlice'
+
+const acarsPollOptions = [
+  { value: 1, label: '1s' },
+  { value: 5, label: '5s' },
+  { value: 10, label: '10s' },
+] as const
+
+const acarsFormatOptions = [
+  { value: 'json', label: 'JSON' },
+  { value: 'xml', label: 'XML' },
+] as const
+
+const distanceOptions = [
+  { value: 'nm', label: 'Nautical Miles' },
+  { value: 'km', label: 'Kilometers' },
+] as const
+
+const speedOptions = [
+  { value: 'kt', label: 'Knots' },
+  { value: 'kmh', label: 'km/h' },
+] as const
+
+const altitudeOptions = [
+  { value: 'ft', label: 'Feet' },
+  { value: 'm', label: 'Meters' },
+] as const
+
+const mapStyleOptions = [
+  { value: 'day', label: 'Day' },
+  { value: 'night', label: 'Night' },
+  { value: 'auto', label: 'Auto' },
+] as const
 
 function ProfileTab() {
   const { user } = useAuth()
@@ -51,26 +83,19 @@ function AcarsTab() {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <span>ACARS Poll Interval</span>
-        <select
+        <Select
           value={acarsPollInterval}
-          onChange={(e) => setAcarsPollInterval(parseInt(e.target.value) as 1 | 5 | 10)}
-          className="rounded-md bg-white p-2 text-gray-900 dark:bg-gray-700 dark:text-white"
-        >
-          <option value={1}>1s</option>
-          <option value={5}>5s</option>
-          <option value={10}>10s</option>
-        </select>
+          onChange={setAcarsPollInterval}
+          options={acarsPollOptions}
+        />
       </div>
       <div className="flex items-center justify-between">
         <span>Data Format</span>
-        <select
+        <Select
           value={acarsFormat}
-          onChange={(e) => setAcarsFormat(e.target.value as 'json' | 'xml')}
-          className="rounded-md bg-white p-2 text-gray-900 dark:bg-gray-700 dark:text-white"
-        >
-          <option value="json">JSON</option>
-          <option value="xml">XML</option>
-        </select>
+          onChange={setAcarsFormat}
+          options={acarsFormatOptions}
+        />
       </div>
       <div className="flex items-center justify-between">
         <span>Enable Logging</span>
@@ -114,48 +139,31 @@ function AppTab() {
       </div>
       <div className="flex items-center justify-between">
         <span>Distance Unit</span>
-        <select
+        <Select
           value={distanceUnit}
-          onChange={(e) => setDistanceUnit(e.target.value as 'nm' | 'km')}
-          className="rounded-md bg-white p-2 text-gray-900 dark:bg-gray-700 dark:text-white"
-        >
-          <option value="nm">Nautical Miles</option>
-          <option value="km">Kilometers</option>
-        </select>
+          onChange={setDistanceUnit}
+          options={distanceOptions}
+        />
       </div>
       <div className="flex items-center justify-between">
         <span>Speed Unit</span>
-        <select
+        <Select
           value={speedUnit}
-          onChange={(e) => setSpeedUnit(e.target.value as 'kt' | 'kmh')}
-          className="rounded-md bg-white p-2 text-gray-900 dark:bg-gray-700 dark:text-white"
-        >
-          <option value="kt">Knots</option>
-          <option value="kmh">km/h</option>
-        </select>
+          onChange={setSpeedUnit}
+          options={speedOptions}
+        />
       </div>
       <div className="flex items-center justify-between">
         <span>Altitude Unit</span>
-        <select
+        <Select
           value={altitudeUnit}
-          onChange={(e) => setAltitudeUnit(e.target.value as 'ft' | 'm')}
-          className="rounded-md bg-white p-2 text-gray-900 dark:bg-gray-700 dark:text-white"
-        >
-          <option value="ft">Feet</option>
-          <option value="m">Meters</option>
-        </select>
+          onChange={setAltitudeUnit}
+          options={altitudeOptions}
+        />
       </div>
       <div className="flex items-center justify-between">
         <span>Map Style</span>
-        <select
-          value={mapStyle}
-          onChange={(e) => setMapStyle(e.target.value as 'day' | 'night' | 'auto')}
-          className="rounded-md bg-white p-2 text-gray-900 dark:bg-gray-700 dark:text-white"
-        >
-          <option value="day">Day</option>
-          <option value="night">Night</option>
-          <option value="auto">Auto</option>
-        </select>
+        <Select value={mapStyle} onChange={setMapStyle} options={mapStyleOptions} />
       </div>
       <div className="flex items-center justify-between">
         <span>Push Notifications</span>
