@@ -32,6 +32,8 @@ export function LoginScreen() {
             id="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            placeholder="Username"
+            className="bg-gray-700 text-white placeholder-gray-400 border border-gray-600 rounded-lg px-4 py-2"
           />
         </div>
         <div className="space-y-1">
@@ -41,6 +43,8 @@ export function LoginScreen() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            className="bg-gray-700 text-white placeholder-gray-400 border border-gray-600 rounded-lg px-4 py-2"
           />
         </div>
         {error && <p className="text-sm text-red-500">{error}</p>}
