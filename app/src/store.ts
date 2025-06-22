@@ -7,6 +7,7 @@ import fleetReducer from './fleetSlice'
 import flightsReducer from './flightsSlice'
 import notificationsReducer from './notificationsSlice'
 import rosterReducer from './rosterSlice'
+import dashboardReducer from './dashboardSlice'
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
     flights: flightsReducer,
     notifications: notificationsReducer,
     roster: rosterReducer,
+    dashboard: dashboardReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 })
