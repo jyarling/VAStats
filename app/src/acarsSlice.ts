@@ -1,13 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit'
+import type { PayloadAction } from '@reduxjs/toolkit'
 import { useAppDispatch, useAppSelector } from './store'
-import type { RootState } from './store'
+import type { AppDispatch, RootState } from './store'
+
+export interface DataPoint {
+  time: number
+  ias: number
+  alt: number
+  vs: number
+}
 
 export interface AcarsState {
-  inFlight: boolean
+  isFlying: boolean
+  data: DataPoint[]
 }
 
 const initialState: AcarsState = {
-  inFlight: false,
+  isFlying: false,
+  data: [],
 }
 
 const acarsSlice = createSlice({
@@ -15,25 +25,50 @@ const acarsSlice = createSlice({
   initialState,
   reducers: {
     startFlight(state) {
-      state.inFlight = true
+      state.isFlying = true
+      state.data = []
     },
     endFlight(state) {
-      state.inFlight = false
+      state.isFlying = false
+    },
+    pushData(state, action: PayloadAction<DataPoint>) {
+      state.data.push(action.payload)
     },
   },
 })
 
-export const { startFlight, endFlight } = acarsSlice.actions
+export const { startFlight, endFlight, pushData } = acarsSlice.actions
 export default acarsSlice.reducer
 
-export const selectInFlight = (state: RootState) => state.acars.inFlight
+export const selectIsFlying = (state: RootState) => state.acars.isFlying
+export const selectData = (state: RootState) => state.acars.data
+
+export const startAcarsFeed = () =>
+  (dispatch: AppDispatch, getState: () => RootState) => {
+    setInterval(() => {
+      const { isFlying } = getState().acars
+      if (isFlying) {
+        dispatch(
+          pushData({
+            time: Date.now(),
+            ias: Math.random() * 400,
+            alt: Math.random() * 40000,
+            vs: Math.random() * 4000 - 2000,
+          }),
+        )
+      }
+    }, 1000)
+  }
 
 export function useAcars() {
   const dispatch = useAppDispatch()
-  const inFlight = useAppSelector(selectInFlight)
+  const isFlying = useAppSelector(selectIsFlying)
+  const data = useAppSelector(selectData)
   return {
-    inFlight,
+    isFlying,
+    data,
     startFlight: () => dispatch(startFlight()),
     endFlight: () => dispatch(endFlight()),
+    startAcarsFeed: () => dispatch(startAcarsFeed()),
   }
 }
