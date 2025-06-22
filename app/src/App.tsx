@@ -1,85 +1,35 @@
-import "./App.css";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import ActiveFlights from "./ActiveFlights";
-import UiElements from "./UiElements";
-
-interface AcarsMessage {
-  id: number;
-  time: string;
-  sender: string;
-  message: string;
-}
-
-const dummyData: AcarsMessage[] = [
-  {
-    id: 1,
-    time: "12:00Z",
-    sender: "ATC",
-    message: "CLEARED FL350"
-  },
-  {
-    id: 2,
-    time: "12:05Z",
-    sender: "DISP",
-    message: "WEATHER UPDATE"
-  },
-  {
-    id: 3,
-    time: "12:10Z",
-    sender: "ATC",
-    message: "CONTACT CENTER"
-  }
-];
-
-function Home() {
-  return (
-    <div className="App">
-      <h1>Electron ACARS Viewer</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Time</th>
-            <th>Sender</th>
-            <th>Message</th>
-          </tr>
-        </thead>
-        <tbody>
-          {dummyData.map((item) => (
-            <tr key={item.id}>
-              <td>{item.time}</td>
-              <td>{item.sender}</td>
-              <td>{item.message}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
+import './App.css'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import ActiveFlights from './ActiveFlights'
+import UiElements from './UiElements'
+import Dashboard from './pages/Dashboard'
+import LiveFlight from './pages/LiveFlight'
+import Logbook from './pages/Logbook'
+import Fleet from './pages/Fleet'
+import VirtualAirline from './pages/VirtualAirline'
+import Settings from './pages/Settings'
+import { Sidebar } from './components'
 
 function App() {
   return (
     <Router>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/active-flights">Active Flights</Link>
-          </li>
-          <li>
-            <Link to="/elements">UI Elements</Link>
-          </li>
-        </ul>
-      </nav>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/active-flights" element={<ActiveFlights />} />
-        <Route path="/elements" element={<UiElements />} />
-      </Routes>
+      <div className="flex h-screen">
+        <Sidebar />
+        <div className="flex-1 overflow-auto p-4">
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/live-flight" element={<LiveFlight />} />
+            <Route path="/logbook" element={<Logbook />} />
+            <Route path="/fleet" element={<Fleet />} />
+            <Route path="/virtual-airline" element={<VirtualAirline />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/active-flights" element={<ActiveFlights />} />
+            <Route path="/elements" element={<UiElements />} />
+          </Routes>
+        </div>
+      </div>
     </Router>
-  );
+  )
 }
 
 export default App;
