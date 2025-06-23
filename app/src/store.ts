@@ -7,6 +7,7 @@ import fleetReducer from './fleetSlice'
 import flightsReducer from './flightsSlice'
 import notificationsReducer from './notificationsSlice'
 import rosterReducer from './rosterSlice'
+import liveFlightsReducer from './liveFlightsSlice'
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     logbook: logbookReducer,
     fleet: fleetReducer,
     flights: flightsReducer,
+    liveFlights: liveFlightsReducer,
     notifications: notificationsReducer,
     roster: rosterReducer,
   },
