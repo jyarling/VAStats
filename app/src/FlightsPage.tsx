@@ -14,15 +14,8 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { useAppDispatch, useAppSelector } from './storeHooks'
-import {
-  selectFlights,
-  selectSort,
-  reorderFlights,
-  toggleSort,
-  type Flight,
-  type SortField,
-} from './flightsSlice'
+import type { Flight, SortField } from './flightsSlice'
+import { useFlights } from './flightsHooks'
 import { Button, Input } from './components'
 
 function SortableRow({ flight }: { flight: Flight }) {
@@ -63,9 +56,7 @@ function SortableRow({ flight }: { flight: Flight }) {
 }
 
 export default function FlightsPage() {
-  const flights = useAppSelector(selectFlights)
-  const sort = useAppSelector(selectSort)
-  const dispatch = useAppDispatch()
+  const { flights, sort, reorder, toggleSort } = useFlights()
   const [filter, setFilter] = useState('')
 
   const filtered = useMemo(() => {
@@ -82,7 +73,7 @@ export default function FlightsPage() {
   const sensors = useSensors(useSensor(PointerSensor))
 
   function handleSort(field: SortField) {
-    dispatch(toggleSort(field))
+    toggleSort(field)
   }
 
   function handleDragEnd(event: DragEndEvent) {
@@ -90,7 +81,7 @@ export default function FlightsPage() {
     if (!over) return
     const from = flights.findIndex((f) => f.id === active.id)
     const to = flights.findIndex((f) => f.id === over.id)
-    if (from !== to) dispatch(reorderFlights({ from, to }))
+    if (from !== to) reorder(from, to)
   }
 
   return (
