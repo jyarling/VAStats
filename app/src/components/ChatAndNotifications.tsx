@@ -1,19 +1,23 @@
 import { useState, useRef, useEffect } from 'react'
 import { Dialog } from '@headlessui/react'
-import { Bell } from 'lucide-react'
+import { MessageCircle } from 'lucide-react'
 import toast, { Toaster } from 'react-hot-toast'
 import { selectNotifications, clearNotification } from '../notificationsSlice'
 import { useAppDispatch, useAppSelector } from '../storeHooks'
+import { useAuth } from '../authSlice'
 
 export default function ChatAndNotifications() {
   const [open, setOpen] = useState(false)
   const [input, setInput] = useState('')
-  const [messages, setMessages] = useState<string[]>([])
+  const [messages, setMessages] = useState<
+    { text: string; user: string; time: Date }[]
+  >([])
   const [unread, setUnread] = useState(0)
   const messagesRef = useRef<HTMLDivElement>(null)
 
   const dispatch = useAppDispatch()
   const notifications = useAppSelector(selectNotifications)
+  const { user } = useAuth()
 
   // show toast for each new notification
   const shown = useRef<Set<number>>(new Set())
@@ -35,7 +39,10 @@ export default function ChatAndNotifications() {
     e.preventDefault()
     const text = input.trim()
     if (!text) return
-    setMessages([...messages, text])
+    setMessages([
+      ...messages,
+      { text, user: user?.username ?? 'User', time: new Date() },
+    ])
     setInput('')
     if (!open) setUnread(v => v + 1)
     requestAnimationFrame(() => {
@@ -46,9 +53,12 @@ export default function ChatAndNotifications() {
   return (
     <>
       <Toaster position="bottom-right" />
-      <div className="fixed right-2 top-2 z-40">
-        <button onClick={() => setOpen(!open)} className="relative rounded-full p-2">
-          <Bell className="h-6 w-6" />
+      <div className="fixed bottom-4 right-4 z-40">
+        <button
+          onClick={() => setOpen(!open)}
+          className="relative rounded-full bg-blue-600 p-3 text-white shadow-lg"
+        >
+          <MessageCircle className="h-6 w-6" />
           {unread > 0 && (
             <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-600 text-xs text-white">
               {unread}
@@ -56,8 +66,12 @@ export default function ChatAndNotifications() {
           )}
         </button>
       </div>
-      <Dialog open={open} onClose={setOpen} className="fixed inset-y-0 right-0 z-40 flex">
-        <Dialog.Panel className="flex h-full w-72 flex-col bg-white shadow-lg dark:bg-[#101a23]">
+      <Dialog
+        open={open}
+        onClose={setOpen}
+        className="fixed inset-0 z-40 flex items-end justify-end p-4"
+      >
+        <Dialog.Panel className="flex w-80 max-h-[70vh] flex-col rounded-lg bg-white shadow-lg dark:bg-[#101a23]">
           <div className="flex items-center justify-between border-b p-2">
             <Dialog.Title className="font-semibold">Community Chat</Dialog.Title>
             {unread > 0 && (
@@ -71,11 +85,13 @@ export default function ChatAndNotifications() {
             className="flex-1 space-y-2 overflow-y-auto p-2 text-sm"
           >
             {messages.map((m, i) => (
-              <div
-                key={i}
-                className="rounded-lg bg-gray-200 px-3 py-1 dark:bg-gray-700"
-              >
-                {m}
+              <div key={i} className="flex flex-col">
+                <div className="rounded-lg bg-gray-200 px-3 py-2 dark:bg-gray-700">
+                  {m.text}
+                </div>
+                <div className="ml-1 text-[10px] text-gray-500 dark:text-gray-400">
+                  {m.user} · {m.time.toLocaleDateString()} {m.time.toLocaleTimeString()}
+                </div>
               </div>
             ))}
           </div>
