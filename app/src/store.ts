@@ -12,6 +12,10 @@ import dashboardReducer from './dashboardSlice'
 const STORAGE_KEY = 'va-stats'
 
 function loadState() {
+  const api: any = (window as any).electron
+  if (api?.loadState) {
+    return api.loadState() || undefined
+  }
   if (typeof localStorage === 'undefined') return undefined
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
@@ -22,9 +26,13 @@ function loadState() {
 }
 
 function saveState(state: RootState) {
+  const { auth, settings } = state
+  const api: any = (window as any).electron
+  if (api?.saveState) {
+    api.saveState({ auth, settings })
+  }
   if (typeof localStorage === 'undefined') return
   try {
-    const { auth, settings } = state
     localStorage.setItem(
       STORAGE_KEY,
       JSON.stringify({ auth, settings }),

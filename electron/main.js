@@ -1,7 +1,27 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain, shell } = require('electron');
 const path = require('path');
+const fs = require('fs');
 
 const isDev = !app.isPackaged;
+
+const stateFile = path.join(app.getPath('userData'), 'state.json');
+
+ipcMain.on('save-state', (_, state) => {
+  try {
+    fs.writeFileSync(stateFile, JSON.stringify(state));
+  } catch {}
+});
+
+ipcMain.on('load-state', (event) => {
+  try {
+    const raw = fs.readFileSync(stateFile, 'utf8');
+    event.returnValue = JSON.parse(raw);
+  } catch {
+    event.returnValue = undefined;
+  }
+});
+
+ipcMain.handle('open-external', (_, url) => shell.openExternal(url));
 
 function createWindow () {
   const win = new BrowserWindow({
