@@ -32,3 +32,13 @@ npm run dist
 
 The compiled files will be produced using `electron-builder`.
 
+
+## Renderer API
+
+The preload script exposes a small API under `window.electron`:
+
+- `openExternal(url)` – open a URL in the system browser.
+- `saveData(key, value)` – persist JSON data under the given key.
+- `loadData(key)` – retrieve previously saved data.
+
+Both `saveData` and `loadData` return promises.

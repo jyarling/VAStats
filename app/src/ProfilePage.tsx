@@ -45,8 +45,17 @@ export function ProfilePage() {
   const [email, setEmail] = useState(user.email)
   const [password, setPassword] = useState('')
 
+  useEffect(() => {
+    window.electron.loadData('profile').then((data: any) => {
+      if (data) {
+        setName((data as any).name ?? user.username)
+        setEmail((data as any).email ?? user.email)
+      }
+    })
+  }, [])
+
   const handleSave = () => {
-    console.log('Save profile', { name, email, password })
+    window.electron.saveData('profile', { name, email })
   }
 
   const handleLogout = () => {

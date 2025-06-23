@@ -40,9 +40,16 @@ function ProfileTab() {
   const [name, setName] = useState(user?.username ?? '')
   const [email, setEmail] = useState(user?.email ?? '')
   const [password, setPassword] = useState('')
+  useEffect(() => {
+    window.electron.loadData('profile').then((data: any) => {
+      if (data) {
+        setName((data as any).name ?? user?.username ?? '')
+        setEmail((data as any).email ?? user?.email ?? '')
+      }
+    })
+  }, [])
   const handleSave = () => {
-    // Placeholder for saving profile changes
-    console.log('Save profile', { name, email, password })
+    window.electron.saveData('profile', { name, email })
   }
   return (
     <div className="space-y-4">
