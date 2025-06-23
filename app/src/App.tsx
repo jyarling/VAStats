@@ -10,6 +10,7 @@ import ProfilePage from './ProfilePage'
 import SettingsPage from './SettingsPage'
 import RosterPage from './RosterPage'
 import HomePage from './HomePage'
+import MaintenanceDashboard from './MaintenanceDashboard'
 
 
 function ProtectedLayout() {
@@ -41,6 +42,7 @@ export default function App() {
             <Route index element={<Navigate to="/dashboard" replace />} />
             <Route path="dashboard" element={<HomePage />} />
             <Route path="flights" element={<FlightsPage />} />
+            <Route path="maintenance" element={<MaintenanceDashboard />} />
             <Route path="community" element={<CommunityHub />} />
             <Route path="roster" element={<RosterPage />} />
             <Route path="settings" element={<SettingsPage />} />

@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom'
-import { Home, Plane, Users, Calendar, Settings, Shield, Menu, LogOut } from 'lucide-react'
+import { Home, Plane, Users, Calendar, Settings, Shield, Menu, LogOut, Wrench } from 'lucide-react'
 import { useState } from 'react'
 import { useAuth } from '../authSlice'
 
@@ -21,6 +21,7 @@ export default function Sidebar({ open = false, onToggle }: SidebarProps) {
   const items = [
     { to: '/', label: 'Home', icon: Home },
     { to: '/flights', label: 'Flights', icon: Plane },
+    { to: '/maintenance', label: 'Maintenance', icon: Wrench },
     { to: '/community', label: 'Community', icon: Users },
     { to: '/roster', label: 'Roster', icon: Calendar },
     { to: '/settings', label: 'Settings', icon: Settings },
