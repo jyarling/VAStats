@@ -18,6 +18,9 @@ function run(command, args, options = {}) {
     console.log('\nBuilding React application...');
     await run('npm', ['run', 'build']);
 
+    console.log('\nRunning unit tests...');
+    await run('npm', ['test']);
+
     console.log('\nLaunching Electron application...');
     const env = { ...process.env, NODE_ENV: 'production' };
     const xvfbExists = spawnSync('which', ['xvfb-run']).status === 0;
