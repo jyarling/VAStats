@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom'
 import { Home, Plane, Users, Calendar, Settings, Shield, Menu, LogOut, Wrench } from 'lucide-react'
 import { useState } from 'react'
-import { useAuth } from '../authSlice'
+import { useAuth } from '../authHooks'
 
 interface SidebarProps {
   open?: boolean

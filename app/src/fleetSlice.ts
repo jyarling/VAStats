@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import { useAppDispatch, useAppSelector } from './storeHooks'
 import type { RootState } from './store'
 
 export interface Aircraft {
@@ -36,12 +35,3 @@ export default fleetSlice.reducer
 
 export const selectFleet = (state: RootState) => state.fleet
 
-export function useFleet() {
-  const dispatch = useAppDispatch()
-  const aircraft = useAppSelector(selectFleet)
-  return {
-    aircraft,
-    addAircraft: (a: Aircraft) => dispatch(addAircraft(a)),
-    markMaintained: (tail: string) => dispatch(markMaintained(tail)),
-  }
-}

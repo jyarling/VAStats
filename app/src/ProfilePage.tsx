@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Tab } from '@headlessui/react'
 import { Button, Input, Label, Switch } from './components'
-import { useAuth } from './authSlice'
-import { useSettings } from './settingsSlice'
+import { useAuth } from './authHooks'
+import { useSettings } from './settingsHooks'
 
 export function ProfilePage() {
   const auth = useAuth()

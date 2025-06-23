@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Tabs, Switch, Input, Label, Button, Select } from './components'
-import { useSettings } from './settingsSlice'
-import { useAuth } from './authSlice'
+import { useSettings } from './settingsHooks'
+import { useAuth } from './authHooks'
 
 const acarsPollOptions = [
   { value: 1, label: '1s' },

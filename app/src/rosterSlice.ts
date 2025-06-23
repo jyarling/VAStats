@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { useAppSelector } from './storeHooks'
 import type { RootState } from './store'
 
 export interface Pilot {
@@ -44,6 +43,3 @@ export default rosterSlice.reducer
 
 export const selectRoster = (state: RootState) => state.roster
 
-export function useRoster() {
-  return useAppSelector(selectRoster)
-}

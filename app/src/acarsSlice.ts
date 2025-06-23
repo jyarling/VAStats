@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import { useAppDispatch, useAppSelector } from './storeHooks'
 import type { AppDispatch, RootState } from './store'
 
 export interface DataPoint {
@@ -70,16 +69,3 @@ export const stopAcarsFeed = () => () => {
   }
 }
 
-export function useAcars() {
-  const dispatch = useAppDispatch()
-  const isFlying = useAppSelector(selectIsFlying)
-  const data = useAppSelector(selectData)
-  return {
-    isFlying,
-    data,
-    startFlight: () => dispatch(startFlight()),
-    endFlight: () => dispatch(endFlight()),
-    startAcarsFeed: () => dispatch(startAcarsFeed()),
-    stopAcarsFeed: () => dispatch(stopAcarsFeed()),
-  }
-}

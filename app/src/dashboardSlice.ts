@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { useAppSelector } from './storeHooks'
 import type { RootState } from './store'
 
 export interface Event {
@@ -52,6 +51,3 @@ export default dashboardSlice.reducer
 
 export const selectDashboard = (state: RootState) => state.dashboard
 
-export function useDashboard() {
-  return useAppSelector(selectDashboard)
-}

@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { Switch, Select } from './components'
-import { useSettings } from './settingsSlice'
+import { useSettings } from './settingsHooks'
 
 const distanceOptions = [
   { value: 'nm', label: 'Nautical Miles' },

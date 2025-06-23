@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Button, Dialog, Input, Label, Select } from './components'
-import { useFleet } from './fleetSlice'
+import { useFleet } from './fleetHooks'
 
 type Status = 'OK' | 'Needs Maintenance'
 
