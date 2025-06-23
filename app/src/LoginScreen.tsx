@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button, Input, Label, Tabs } from './components'
-import { useAuth } from './authSlice'
+import { useAuth } from './authHooks'
 
 export function LoginScreen() {
   const [username, setUsername] = useState('')

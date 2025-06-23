@@ -1,5 +1,5 @@
 import { Calendar } from 'lucide-react'
-import { useDashboard } from './dashboardSlice'
+import { useDashboard } from './dashboardHooks'
 
 export default function HomePage() {
   const {

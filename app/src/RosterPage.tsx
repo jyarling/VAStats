@@ -1,4 +1,4 @@
-import { useRoster } from './rosterSlice'
+import { useRoster } from './rosterHooks'
 import PilotCard from './PilotCard'
 
 export default function RosterPage() {

@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { useAppSelector } from './storeHooks'
 import type { RootState } from './store'
 
 export interface LogEntry {
@@ -27,6 +26,3 @@ export default logbookSlice.reducer
 
 export const selectLogbook = (state: RootState) => state.logbook
 
-export function useLogbook() {
-  return useAppSelector(selectLogbook)
-}

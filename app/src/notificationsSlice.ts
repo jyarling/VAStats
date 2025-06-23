@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import { useAppDispatch, useAppSelector } from './storeHooks'
 import type { RootState } from './store'
 
 export interface ToastNotification {
@@ -46,17 +45,3 @@ export const selectUnreadCount = (state: RootState) =>
 export const selectNotifications = (state: RootState) =>
   state.notifications.notifications
 
-export function useNotifications() {
-  const dispatch = useAppDispatch()
-  const unreadCount = useAppSelector(selectUnreadCount)
-  const notifications = useAppSelector(selectNotifications)
-
-  return {
-    unreadCount,
-    setUnreadCount: (count: number) => dispatch(setUnreadCount(count)),
-    markAllRead: () => dispatch(markAllRead()),
-    addNotification: (msg: string) => dispatch(addNotification(msg)),
-    clearNotification: (id: number) => dispatch(clearNotification(id)),
-    notifications,
-  }
-}
