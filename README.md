@@ -32,3 +32,8 @@ npm run dist
 
 The compiled files will be produced using `electron-builder`.
 
+## Persistence
+
+User authentication and settings are saved to `localStorage` so state is
+restored the next time the application starts.
+
