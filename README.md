@@ -34,6 +34,21 @@ The compiled files will be produced using `electron-builder`.
 
 ## Persistence
 
-User authentication and settings are saved to `localStorage` so state is
-restored the next time the application starts.
+User authentication and settings are saved using a small persistence API
+exposed by the Electron preload script. When running in a browser, the
+application falls back to `localStorage`.
+
+## Renderer API
+
+The preload script exposes an `electron` object on `window` with the
+following methods:
+
+```ts
+window.electron.openExternal(url: string): Promise<void>
+window.electron.loadState(): any
+window.electron.saveState(data: any): void
+```
+
+`openExternal` opens a URL in the default browser, while `loadState` and
+`saveState` read and write a JSON file in Electron's user data directory.
 
