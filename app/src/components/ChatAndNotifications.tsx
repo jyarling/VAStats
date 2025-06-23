@@ -56,8 +56,8 @@ export default function ChatAndNotifications() {
           )}
         </button>
       </div>
-      <Dialog open={open} onClose={setOpen} className="fixed inset-y-0 left-0 z-40 flex">
-        <Dialog.Panel className="flex h-full w-[200px] flex-col bg-white shadow-lg dark:bg-[#101a23]">
+      <Dialog open={open} onClose={setOpen} className="fixed inset-y-0 right-0 z-40 flex">
+        <Dialog.Panel className="flex h-full w-72 flex-col bg-white shadow-lg dark:bg-[#101a23]">
           <div className="flex items-center justify-between border-b p-2">
             <Dialog.Title className="font-semibold">Community Chat</Dialog.Title>
             {unread > 0 && (
@@ -66,9 +66,15 @@ export default function ChatAndNotifications() {
               </span>
             )}
           </div>
-          <div ref={messagesRef} className="flex-1 space-y-1 overflow-y-auto p-2 text-sm">
+          <div
+            ref={messagesRef}
+            className="flex-1 space-y-2 overflow-y-auto p-2 text-sm"
+          >
             {messages.map((m, i) => (
-              <div key={i} className="rounded bg-gray-200 p-1 dark:bg-gray-700">
+              <div
+                key={i}
+                className="rounded-lg bg-gray-200 px-3 py-1 dark:bg-gray-700"
+              >
                 {m}
               </div>
             ))}

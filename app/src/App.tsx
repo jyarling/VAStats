@@ -1,7 +1,7 @@
 import { HashRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom'
 import { useState } from 'react'
 import Sidebar from './components/Sidebar'
-import { Header } from './components'
+import { Header, ChatAndNotifications } from './components'
 import LoginScreen from './LoginScreen'
 import ProtectedRoute from './ProtectedRoute'
 import FlightsPage from './FlightsPage'
@@ -26,6 +26,7 @@ function ProtectedLayout() {
           <Outlet />
         </main>
       </div>
+      <ChatAndNotifications />
     </div>
   )
 }
