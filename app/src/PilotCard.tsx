@@ -10,7 +10,7 @@ export default function PilotCard({ pilot }: PilotCardProps) {
   return (
     <div className="flex flex-col items-center rounded-lg bg-white px-4 py-6 text-gray-900 dark:bg-gray-800 dark:text-white">
       <img
-        src={avatarUrl || '/images/profile.png'}
+        src={avatarUrl || '/images/profile.svg'}
         alt={name}
         className="h-[60px] w-[60px] rounded-full object-cover"
       />

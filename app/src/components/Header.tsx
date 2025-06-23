@@ -11,7 +11,7 @@ export default function Header() {
     <header className="flex h-16 items-center justify-end border-b bg-white px-4 shadow text-gray-900 dark:bg-[#101a23] dark:text-white">
       <div className="mr-4 flex items-center gap-2">
         <img
-          src="/images/profile.png"
+          src="/images/profile.svg"
           alt="avatar"
           className="h-8 w-8 rounded-full object-cover"
         />
