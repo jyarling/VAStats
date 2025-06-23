@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import useDarkMode from './hooks/useDarkMode'
 import { Switch, Select } from './components'
 import { useSettings } from './settingsSlice'
 
@@ -29,13 +29,7 @@ export default function SettingsSection() {
     setAltitudeUnit,
   } = useSettings()
 
-  useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-    }
-  }, [theme])
+  useDarkMode(theme)
 
   return (
     <div className="w-full max-w-sm space-y-4 rounded-lg bg-gray-100 p-6 text-gray-900 dark:bg-gray-800 dark:text-white">

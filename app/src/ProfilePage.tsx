@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Tab } from '@headlessui/react'
 import { Button, Input, Label, Switch } from './components'
 import { useAuth } from './authSlice'
 import { useSettings } from './settingsSlice'
+import useDarkMode from './hooks/useDarkMode'
 
 export function ProfilePage() {
   const auth = useAuth()
@@ -33,13 +34,7 @@ export function ProfilePage() {
     setAcarsLogging,
   } = useSettings()
 
-  useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-    }
-  }, [theme])
+  useDarkMode(theme)
 
   const [name, setName] = useState(user.username)
   const [email, setEmail] = useState(user.email)
