@@ -1,6 +1,6 @@
 import NotificationBell from './NotificationBell'
-import { useAuth } from '../authSlice'
-import { useAcars } from '../acarsSlice'
+import { useAuth } from '../authHooks'
+import { useAcars } from '../acarsHooks'
 
 export default function Header() {
   const { user } = useAuth()

@@ -4,7 +4,7 @@ import { MessageCircle } from 'lucide-react'
 import toast, { Toaster } from 'react-hot-toast'
 import { selectNotifications, clearNotification } from '../notificationsSlice'
 import { useAppDispatch, useAppSelector } from '../storeHooks'
-import { useAuth } from '../authSlice'
+import { useAuth } from '../authHooks'
 
 export default function ChatAndNotifications() {
   const [open, setOpen] = useState(false)

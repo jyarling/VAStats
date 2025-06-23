@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { Bell } from 'lucide-react'
-import { useNotifications } from '../notificationsSlice'
+import { useNotifications } from '../notificationsHooks'
 
 export default function NotificationBell() {
   const { unreadCount } = useNotifications()

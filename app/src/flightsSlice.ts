@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import { useAppDispatch, useAppSelector } from './storeHooks'
 import type { RootState } from './store'
 
 export interface Flight {
@@ -72,15 +71,3 @@ export const selectFlights = (state: RootState) => state.flights.list
 
 export const selectSort = (state: RootState) => state.flights.sort
 
-export function useFlights() {
-  const dispatch = useAppDispatch()
-  const flights = useAppSelector(selectFlights)
-  const sort = useAppSelector(selectSort)
-  return {
-    flights,
-    sort,
-    reorder: (from: number, to: number) =>
-      dispatch(reorderFlights({ from, to })),
-    toggleSort: (field: SortField) => dispatch(toggleSort(field)),
-  }
-}

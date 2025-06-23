@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { useAppDispatch, useAppSelector } from './storeHooks'
 import type { RootState } from './store'
 
 export interface AuthState {
@@ -37,14 +36,3 @@ export const selectIsAuthenticated = (state: RootState) =>
   state.auth.isAuthenticated
 export const selectUser = (state: RootState) => state.auth.user
 
-export function useAuth() {
-  const dispatch = useAppDispatch()
-  const isAuthenticated = useAppSelector(selectIsAuthenticated)
-  const user = useAppSelector(selectUser)
-  return {
-    isAuthenticated,
-    user,
-    login: () => dispatch(login()),
-    logout: () => dispatch(logout()),
-  }
-}
