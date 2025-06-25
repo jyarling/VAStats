@@ -11,6 +11,8 @@ exports.getNotifications = getNotifications;
 exports.getAcarsLogs = getAcarsLogs;
 const pg_1 = require("pg");
 const electron_log_1 = __importDefault(require("electron-log"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 const connectionString = process.env.DATABASE_URL ||
     'postgres://user:password@localhost:5432/VAStats';
 const pool = new pg_1.Pool({

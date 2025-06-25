@@ -22,6 +22,18 @@ The root `npm install` triggers a `postinstall` step that installs the React
 dependencies in `app`. If you skip that step, run `npm install` inside
 `app` manually.
 
+### Database Configuration
+
+The Electron process reads a `DATABASE_URL` environment variable to connect to
+PostgreSQL. You can create a `.env` file in the project root to override the
+default connection string:
+
+```bash
+DATABASE_URL=postgres://user:password@localhost:5432/VAStats
+```
+
+Any values in `.env` will be loaded automatically when the app starts.
+
 ## Building
 
 Create a packaged build with:
