@@ -14,7 +14,8 @@
     "postinstall": "cd app && npm install"
   },
   "dependencies": {
-    "electron": "^36.5.0"
+    "electron": "^36.5.0",
+    "electron-log": "^5.4.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.6.3",
