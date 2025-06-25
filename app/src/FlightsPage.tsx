@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { User, Pencil, Trash, ChevronUp, ChevronDown } from 'lucide-react'
 import {
   DndContext,
@@ -14,15 +14,8 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { useAppDispatch, useAppSelector } from './storeHooks'
-import {
-  selectFlights,
-  selectSort,
-  reorderFlights,
-  toggleSort,
-  type Flight,
-  type SortField,
-} from './flightsSlice'
+import { type Flight, type SortField } from './flightsSlice'
+import { useFlights } from './features/dbHooks'
 import { Button, Input } from './components'
 
 function SortableRow({ flight }: { flight: Flight }) {
@@ -63,34 +56,61 @@ function SortableRow({ flight }: { flight: Flight }) {
 }
 
 export default function FlightsPage() {
-  const flights = useAppSelector(selectFlights)
-  const sort = useAppSelector(selectSort)
-  const dispatch = useAppDispatch()
+  const { data: flightsData, isLoading } = useFlights()
+  const [flights, setFlights] = useState<Flight[]>([])
+  const [sort, setSort] = useState<{ field: SortField; direction: 'asc' | 'desc' }>({
+    field: 'pilot',
+    direction: 'asc',
+  })
   const [filter, setFilter] = useState('')
+
+  useEffect(() => {
+    if (flightsData) setFlights(flightsData)
+  }, [flightsData])
+
+  const sorted = useMemo(() => {
+    const dir = sort.direction === 'asc' ? 1 : -1
+    return [...flights].sort((a, b) => {
+      const valA = a[sort.field]
+      const valB = b[sort.field]
+      return valA > valB ? dir : valA < valB ? -dir : 0
+    })
+  }, [flights, sort])
 
   const filtered = useMemo(() => {
     const term = filter.toLowerCase()
-    return flights.filter(
+    return sorted.filter(
       (f) =>
         f.pilot.toLowerCase().includes(term) ||
         f.origin.toLowerCase().includes(term) ||
         f.destination.toLowerCase().includes(term) ||
         f.aircraft.toLowerCase().includes(term),
     )
-  }, [flights, filter])
+  }, [sorted, filter])
 
   const sensors = useSensors(useSensor(PointerSensor))
 
   function handleSort(field: SortField) {
-    dispatch(toggleSort(field))
+    setSort(prev => {
+      if (prev.field === field) {
+        return { field, direction: prev.direction === 'asc' ? 'desc' : 'asc' }
+      }
+      return { field, direction: 'asc' }
+    })
   }
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event
     if (!over) return
-    const from = flights.findIndex((f) => f.id === active.id)
-    const to = flights.findIndex((f) => f.id === over.id)
-    if (from !== to) dispatch(reorderFlights({ from, to }))
+    setFlights((items) => {
+      const from = items.findIndex((f) => f.id === active.id)
+      const to = items.findIndex((f) => f.id === over.id)
+      if (from === to) return items
+      const updated = [...items]
+      const [flight] = updated.splice(from, 1)
+      updated.splice(to, 0, flight)
+      return updated
+    })
   }
 
   return (
@@ -101,14 +121,21 @@ export default function FlightsPage() {
         value={filter}
         onChange={(e) => setFilter(e.target.value)}
       />
-      <DndContext
-        sensors={sensors}
-        collisionDetection={closestCenter}
-        onDragEnd={handleDragEnd}
-      >
-        <table className="w-full border-collapse text-sm">
-          <thead className="sticky top-0 bg-gray-200 text-gray-700 dark:bg-gray-900 dark:text-gray-300">
-            <tr>
+      {isLoading ? (
+        <div className="flex justify-center p-4">
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-transparent" />
+        </div>
+      ) : flights.length === 0 ? (
+        <p className="text-center text-gray-500">No flights found.</p>
+      ) : (
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
+          <table className="w-full border-collapse text-sm">
+            <thead className="sticky top-0 bg-gray-200 text-gray-700 dark:bg-gray-900 dark:text-gray-300">
+              <tr>
               <th
                 onClick={() => handleSort('pilot')}
                 className="cursor-pointer px-3 py-2 text-left font-semibold"
@@ -176,7 +203,8 @@ export default function FlightsPage() {
           </SortableContext>
         </table>
       </DndContext>
-      </div>
+      )}
+    </div>
   )
 }
 
