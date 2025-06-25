@@ -2,6 +2,9 @@ import { app, BrowserWindow, ipcMain, shell } from 'electron';
 import path from 'path';
 import fs from 'fs';
 import * as db from './db';
+import log from 'electron-log';
+
+log.initialize();
 
 const isDev = !app.isPackaged;
 
@@ -41,12 +44,59 @@ function createWindow(): void {
     win.loadFile(path.join(__dirname, '../app/dist/index.html'));
   }
 
-  ipcMain.handle('db:getPilots', () => db.getPilots());
-  ipcMain.handle('db:getAircraft', () => db.getAircraft());
-  ipcMain.handle('db:getFlights', () => db.getFlights());
-  ipcMain.handle('db:getEvents', () => db.getEvents());
-  ipcMain.handle('db:getNotifications', () => db.getNotifications());
-  ipcMain.handle('db:getAcarsLogs', (_evt, flightId: number) => db.getAcarsLogs(flightId));
+  ipcMain.handle('db:getPilots', async () => {
+    try {
+      return await db.getPilots();
+    } catch (error) {
+      log.error('db:getPilots', error);
+      throw error;
+    }
+  });
+
+  ipcMain.handle('db:getAircraft', async () => {
+    try {
+      return await db.getAircraft();
+    } catch (error) {
+      log.error('db:getAircraft', error);
+      throw error;
+    }
+  });
+
+  ipcMain.handle('db:getFlights', async () => {
+    try {
+      return await db.getFlights();
+    } catch (error) {
+      log.error('db:getFlights', error);
+      throw error;
+    }
+  });
+
+  ipcMain.handle('db:getEvents', async () => {
+    try {
+      return await db.getEvents();
+    } catch (error) {
+      log.error('db:getEvents', error);
+      throw error;
+    }
+  });
+
+  ipcMain.handle('db:getNotifications', async () => {
+    try {
+      return await db.getNotifications();
+    } catch (error) {
+      log.error('db:getNotifications', error);
+      throw error;
+    }
+  });
+
+  ipcMain.handle('db:getAcarsLogs', async (_evt, flightId: number) => {
+    try {
+      return await db.getAcarsLogs(flightId);
+    } catch (error) {
+      log.error('db:getAcarsLogs', error);
+      throw error;
+    }
+  });
 }
 
 app.whenReady().then(createWindow);
