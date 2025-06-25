@@ -1,5 +1,8 @@
 import { Pool } from 'pg';
 import log from 'electron-log';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const connectionString =
   process.env.DATABASE_URL ||

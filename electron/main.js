@@ -40,6 +40,8 @@ const electron_1 = require("electron");
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 const db = __importStar(require("./db"));
+const electron_log_1 = __importDefault(require("electron-log"));
+electron_log_1.default.initialize();
 const isDev = !electron_1.app.isPackaged;
 const stateFile = path_1.default.join(electron_1.app.getPath('userData'), 'state.json');
 electron_1.ipcMain.on('save-state', (_, state) => {
@@ -74,12 +76,60 @@ function createWindow() {
     else {
         win.loadFile(path_1.default.join(__dirname, '../app/dist/index.html'));
     }
-    electron_1.ipcMain.handle('db:getPilots', () => db.getPilots());
-    electron_1.ipcMain.handle('db:getAircraft', () => db.getAircraft());
-    electron_1.ipcMain.handle('db:getFlights', () => db.getFlights());
-    electron_1.ipcMain.handle('db:getEvents', () => db.getEvents());
-    electron_1.ipcMain.handle('db:getNotifications', () => db.getNotifications());
-    electron_1.ipcMain.handle('db:getAcarsLogs', (_evt, flightId) => db.getAcarsLogs(flightId));
+    electron_1.ipcMain.handle('db:getPilots', async () => {
+        try {
+            return await db.getPilots();
+        }
+        catch (error) {
+            electron_log_1.default.error('db:getPilots', error);
+            throw error;
+        }
+    });
+    electron_1.ipcMain.handle('db:getAircraft', async () => {
+        try {
+            return await db.getAircraft();
+        }
+        catch (error) {
+            electron_log_1.default.error('db:getAircraft', error);
+            throw error;
+        }
+    });
+    electron_1.ipcMain.handle('db:getFlights', async () => {
+        try {
+            return await db.getFlights();
+        }
+        catch (error) {
+            electron_log_1.default.error('db:getFlights', error);
+            throw error;
+        }
+    });
+    electron_1.ipcMain.handle('db:getEvents', async () => {
+        try {
+            return await db.getEvents();
+        }
+        catch (error) {
+            electron_log_1.default.error('db:getEvents', error);
+            throw error;
+        }
+    });
+    electron_1.ipcMain.handle('db:getNotifications', async () => {
+        try {
+            return await db.getNotifications();
+        }
+        catch (error) {
+            electron_log_1.default.error('db:getNotifications', error);
+            throw error;
+        }
+    });
+    electron_1.ipcMain.handle('db:getAcarsLogs', async (_evt, flightId) => {
+        try {
+            return await db.getAcarsLogs(flightId);
+        }
+        catch (error) {
+            electron_log_1.default.error('db:getAcarsLogs', error);
+            throw error;
+        }
+    });
 }
 electron_1.app.whenReady().then(createWindow);
 electron_1.app.on('activate', () => {
