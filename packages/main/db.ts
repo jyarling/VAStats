@@ -1,8 +1,12 @@
 import { Pool } from 'pg';
 import log from 'electron-log';
 
+const connectionString =
+  process.env.DATABASE_URL ||
+  'postgres://user:password@localhost:5432/VAStats';
+
 const pool: Pool = new Pool({
-  connectionString: 'postgres://user:password@localhost:5432/VAStats',
+  connectionString,
 });
 
 export async function getPilots(): Promise<any[]> {
