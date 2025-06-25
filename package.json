@@ -4,9 +4,10 @@
   "main": "electron/main.js",
   "scripts": {
     "start:react": "npm --prefix app run dev",
-    "start:electron": "wait-on http://localhost:5173 && electron .",
+    "build:main": "tsc -p tsconfig.main.json",
+    "start:electron": "npm run build:main && wait-on http://localhost:5173 && electron .",
     "dev": "concurrently -k \"npm run start:react\" \"npm run start:electron\"",
-    "build": "npm --prefix app run build",
+    "build": "npm run build:main && npm --prefix app run build",
     "pack": "npm run build && electron-builder --dir",
     "dist": "npm run build && electron-builder",
     "verify": "node scripts/verify.js",

@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES2021",
+    "module": "commonjs",
+    "outDir": "electron",
+    "rootDir": "packages/main",
+    "esModuleInterop": true,
+    "strict": false,
+    "skipLibCheck": true,
+    "paths": {
+      "pg": [
+        "./packages/main/types/pg.d.ts"
+      ]
+    }
+  },
+  "include": [
+    "packages/main/**/*.ts"
+  ]
+}
