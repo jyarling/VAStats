@@ -1,4 +1,7 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getPilots = getPilots;
 exports.getAircraft = getAircraft;
@@ -7,8 +10,11 @@ exports.getEvents = getEvents;
 exports.getNotifications = getNotifications;
 exports.getAcarsLogs = getAcarsLogs;
 const pg_1 = require("pg");
+const electron_log_1 = __importDefault(require("electron-log"));
+const connectionString = process.env.DATABASE_URL ||
+    'postgres://user:password@localhost:5432/VAStats';
 const pool = new pg_1.Pool({
-    connectionString: 'postgres://user:password@localhost:5432/VAStats',
+    connectionString,
 });
 async function getPilots() {
     try {
@@ -16,7 +22,7 @@ async function getPilots() {
         return rows;
     }
     catch (error) {
-        console.error(error);
+        electron_log_1.default.error(error);
         throw error;
     }
 }
@@ -26,7 +32,7 @@ async function getAircraft() {
         return rows;
     }
     catch (error) {
-        console.error(error);
+        electron_log_1.default.error(error);
         throw error;
     }
 }
@@ -36,7 +42,7 @@ async function getFlights() {
         return rows;
     }
     catch (error) {
-        console.error(error);
+        electron_log_1.default.error(error);
         throw error;
     }
 }
@@ -46,7 +52,7 @@ async function getEvents() {
         return rows;
     }
     catch (error) {
-        console.error(error);
+        electron_log_1.default.error(error);
         throw error;
     }
 }
@@ -56,7 +62,7 @@ async function getNotifications() {
         return rows;
     }
     catch (error) {
-        console.error(error);
+        electron_log_1.default.error(error);
         throw error;
     }
 }
@@ -66,7 +72,7 @@ async function getAcarsLogs(flightId) {
         return rows;
     }
     catch (error) {
-        console.error(error);
+        electron_log_1.default.error(error);
         throw error;
     }
 }
